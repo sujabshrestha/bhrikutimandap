@@ -28,51 +28,12 @@ class VendorController extends Controller
 
     public function index(Request $request)
     {
-        // try {
-
-        if ($request->ajax()) {
-            $datas = Venue::get();
-            return DataTables::of($datas)
-                ->addIndexColumn()
-                ->addColumn('status', function($row){
-                    if($row->status == "Available"){
-                       return '<span class="badge badge-primary">Available</span>';
-                    }
-                    elseif($row->status == "Booked"){
-                        return '<span class="badge badge-secondary">Booked</span>';
-
-                    }
-                    else{
-                       return '<span class="badge badge-danger">Cancelled</span>';
-                    }
-               })
-                // ->addColumn('status', function ($row) {
-                //     return '<select id="select" class="form-control" name"select">
-                //                       <option  >Available</option>
-                //                       <option>Pending</option>
-                //                       <option>Completed</option>
-                //                 </select> ';
-                // })
-                ->addColumn('image', function ($row) {
-                    $url= url('/').getOrginalUrl($row->image_id);
-                    return '<img src="'.$url.'" border="0" width="40" class="img-rounded" align="center" />';
-                })
-                ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" data-url="'. route('backend.venue.edit', $row->id) .'" data-id=' . $row->id . ' class="editVenue btn btn-info btn-sm" title="Edit"><i class="far fa-edit"></i></a>
-                                <a href="javascript:void(0)" id="" data-url="'. route('backend.venue.delete', $row->id) .'"  data-id=' . $row->id . ' class="delete btn btn-danger btn-sm" title="Delete"><i class="far fa-trash-alt"></i></a>
-                                ';
-                    return $actionBtn;
-                })
-                ->rawColumns(['action', 'status', 'image'])
-                ->make(true);
+        try {
+        return view('Vendor::frontend.vendor.home');
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
         }
-
-
-        return view('Venue::backend.venue.index');
-        // } catch (\Exception $e) {
-        //     Toastr::error($e->getMessage());
-        //     return redirect()->back();
-        // }
     }
 
     /**

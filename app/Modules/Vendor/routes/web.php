@@ -12,7 +12,7 @@ Route::group(
 function () {
 
 
-    Route::get('/home', 'VendorController@index')->name('index');
+    Route::get('/', 'VendorController@index')->name('home');
 
     Route::get('create', 'VendorController@create')->name('create');
 
