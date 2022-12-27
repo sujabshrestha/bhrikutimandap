@@ -184,7 +184,9 @@ return [
         Brian2694\Toastr\ToastrServiceProvider::class,
         SiteSetting\Providers\SiteSettingServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Venue\Providers\VenueServiceProvider::class
+        Venue\Providers\VenueServiceProvider::class,
+        Vendor\Providers\VendorServiceProvider::class
+
 
     ],
 

@@ -34,8 +34,8 @@
             "User\\": "app/Modules/User",
             "Auth\\": "app/Modules/Auth",
             "SiteSetting\\": "app/Modules/SiteSetting",
-            "Venue\\":"app/Modules/Venue"
-
+            "Venue\\":"app/Modules/Venue",
+            "Vendor\\":"app/Modules/Vendor"
         },
         "files": [
             "app/Helpers/path.php",
