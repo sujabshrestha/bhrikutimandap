@@ -9,240 +9,122 @@
 
 @section('content')
     <!--  BEGIN CONTENT AREA  -->
-    <main class = "page-index">
+    <main class = "page-gallery pb-5 py-5">
         <div class = "container">
-            <section class = "sc-booking-selection px-3">
-                <form>
-                    <div class = "booking-selection-content d-lg-flex justify-content-lg-center">
-                        <div class = "booking-selection-item d-flex align-items-center">
-                            <div class = "input-group">
-                                <div class = "input-group-text">
-                                    <img src = "{{ asset('frontendFiles/assets/images/icons/calendar-search.svg')}}">
+            <section class = "sc-gallery px-3 overflow-hidden">
+                <div class="gallery-content">
+                    <div class = "gallery-cards row">
+                        <div class = "col-md-6 col-lg-4 mb-4">
+                            <div class = "gallery-card h-100">
+                                <div class = "gallery-card-img">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-1.png') }}" alt = "">
                                 </div>
-                                <input type = "text" class = "form-control check-in-datepicker" placeholder="Check-In" name = "">
+                                <div class = "gallery-card-footer mt-3">
+                                    <span class = "d-block text-xs text-silver">14th December 2021</span>
+                                    <h2 class = "text-xl fw-6">FEEN Electro tech 2021 </h2>
+                                </div>
                             </div>
                         </div>
-
-                        <div class = "booking-selection-item d-flex align-items-center">
-                            <div class = "input-group">
-                                <div class = "input-group-text">
-                                    <img src = "{{ asset('frontendFiles/assets/images/icons/calendar-search.svg')}}">
+                        <div class = "col-md-6 col-lg-4 mb-4">
+                            <div class = "gallery-card h-100">
+                                <div class = "gallery-card-img">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-2.png') }}" alt = "">
                                 </div>
-                                <input type = "text" class = "form-control check-out-datepicker" placeholder="Check-Out" name = "">
+                                <div class = "gallery-card-footer mt-3">
+                                    <span class = "d-block text-xs text-silver">14th December 2021</span>
+                                    <h2 class = "text-xl fw-6">NADA Car Event </h2>
+                                </div>
                             </div>
                         </div>
-
-                        
-                        <div class = "booking-selection-item">
-                            <button type = "submit" class = "btn btn-charcoal text-capitalize book-now-btn"><span class = "btn-text">Filter</span></button>
+                        <div class = "col-md-6 col-lg-4 mb-4">
+                            <div class = "gallery-card h-100">
+                                <div class = "gallery-card-img">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-3.png') }}" alt = "">
+                                </div>
+                                <div class = "gallery-card-footer mt-3">
+                                    <span class = "d-block text-xs text-silver">14th December 2021</span>
+                                    <h2 class = "text-xl fw-6">Shikhar Shoe Mela</h2>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </section>
-
-            <section class = "sc-avail px-3 overflow-hidden">
-                <div class = "sc-avail-content mb-5">
-                    <div class = "sc-title">
-                        <h3>Availability list</h3>
-                    </div>
-                    <div class = "avail-data">
-                        <table class = "table">
-                            <thead>
-                                <tr>
-                                    <th class = "avail-text-lg">Check</th>
-                                    <th class = "text-start avail-text-lg">Venue</th>
-                                    <th class = "avail-text-lg">Time</th>
-                                    <th class = "avail-text-lg">Status</th>
-                                    <th class = "avail-text-lg">Cost</th>
-                                    <th class = "avail-text-lg">View</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- booking available -->
-                                <tr>
-                                    <td>
-                                        <div class="form-check d-flex align-items-center p-0 m-0">
-                                            <input class="form-check-input p-0 m-0" type="checkbox" value="" id="flexCheckDefault">
-                                        </div>
-                                    </td>
-                                    <td class = "text-start">
-                                        <span class = "avail-text-lg text-color">Large Exbition Hall & area around it</span>
-                                    </td>
-                                    <td>
-                                        <div class = "d-flex flex-column">
-                                            <span class = "text-green avail-text">Available</span>
-                                            <span class = "text-color avail-text mt-2">On 25,26 & 27th Jan</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class = "status-pills status-pills-green">
-                                            <div class = "pills-dot"></div>
-                                            <span class = "pills-text">Available</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class = "avail-text-lg text-color">Rs. 2,50,000 per day</span>
-                                    </td>
-                                    <td>
-                                        <a href = "#" class = "btn btn-primary px-3"><span class = "btn-text">Details</span></a>
-                                    </td>
-                                </tr>
-                                <!-- end of booking available -->
-
-                                <!-- booking not available -->
-                                <tr>
-                                    <td>
-                                        <div class="form-check d-flex align-items-center p-0 m-0">
-                                            <input class="form-check-input p-0 m-0" type="checkbox" value="" id="flexCheckDefault">
-                                        </div>
-                                    </td>
-                                    <td class = "text-start">
-                                        <span class = "avail-text-lg text-color">Large Ground</span>
-                                    </td>
-                                    <td>
-                                        <div class = "d-flex flex-column">
-                                            <span class = "text-red avail-text">Not Available</span>
-                                            <span class = "text-color avail-text mt-2">Before 30 Jan</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class = "status-pills status-pills-red">
-                                            <div class = "pills-dot"></div>
-                                            <span class = "pills-text">Booked</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class = "avail-text-lg text-color">Rs. 75,000 per day</span>
-                                    </td>
-                                    <td>
-                                        <a href = "#" class = "btn btn-primary px-3"><span class = "btn-text">Details</span></a>
-                                    </td>
-                                </tr>
-                                <!-- end of booking not available -->
-
-                                <tr>
-                                    <td>
-                                        <div class="form-check d-flex align-items-center p-0 m-0">
-                                            <input class="form-check-input p-0 m-0" type="checkbox" value="" id="flexCheckDefault">
-                                        </div>
-                                    </td>
-                                    <td class = "text-start">
-                                        <span class = "avail-text-lg text-color">Garden</span>
-                                    </td>
-                                    <td>
-                                        <div class = "d-flex flex-column">
-                                            <span class = "text-green avail-text">Available</span>
-                                            <span class = "text-color avail-text mt-2">On 25,26 & 27th Jan</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class = "status-pills status-pills-green">
-                                            <div class = "pills-dot"></div>
-                                            <span class = "pills-text">Available</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class = "avail-text-lg text-color">Rs. 75,000 per day</span>
-                                    </td>
-                                    <td>
-                                        <a href = "#" class = "btn btn-primary px-3"><span class = "btn-text">Details</span></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="form-check d-flex align-items-center p-0 m-0">
-                                            <input class="form-check-input p-0 m-0" type="checkbox" value="" id="flexCheckDefault">
-                                        </div>
-                                    </td>
-                                    <td class = "text-start">
-                                        <span class = "avail-text-lg text-color">Ground adjacent to Main gate</span>
-                                    </td>
-                                    <td>
-                                        <div class = "d-flex flex-column">
-                                            <span class = "text-green avail-text">Available</span>
-                                            <span class = "text-color avail-text mt-2">On 25,26 & 27th Jan</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class = "status-pills status-pills-green">
-                                            <div class = "pills-dot"></div>
-                                            <span class = "pills-text">Available</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class = "avail-text-lg text-color">Rs. 30,000 per day</span>
-                                    </td>
-                                    <td>
-                                        <a href = "#" class = "btn btn-primary px-3"><span class = "btn-text">Details</span></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="form-check d-flex align-items-center p-0 m-0">
-                                            <input class="form-check-input p-0 m-0" type="checkbox" value="" id="flexCheckDefault">
-                                        </div>
-                                    </td>
-                                    <td class = "text-start">
-                                        <span class = "avail-text-lg text-color">Ground behind exibition hall</span>
-                                    </td>
-                                    <td>
-                                        <div class = "d-flex flex-column">
-                                            <span class = "text-red avail-text">Not Available</span>
-                                            <span class = "text-color avail-text mt-2">Before 30 Jan</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class = "status-pills status-pills-red">
-                                            <div class = "pills-dot"></div>
-                                            <span class = "pills-text">Booked</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class = "avail-text-lg text-color">Rs. 12,500 per day</span>
-                                    </td>
-                                    <td>
-                                        <a href = "#" class = "btn btn-primary px-3"><span class = "btn-text">Details</span></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="form-check d-flex align-items-center p-0 m-0">
-                                            <input class="form-check-input p-0 m-0" type="checkbox" value="" id="flexCheckDefault">
-                                        </div>
-                                    </td>
-                                    <td class = "text-start">
-                                        <span class = "avail-text-lg text-color">Ticket counter</span>
-                                    </td>
-                                    <td>
-                                        <div class = "d-flex flex-column">
-                                            <span class = "text-green avail-text">Available</span>
-                                            <span class = "text-color avail-text mt-2">On 25,26 & 27th Jan</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class = "status-pills status-pills-green">
-                                            <div class = "pills-dot"></div>
-                                            <span class = "pills-text">Available</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class = "avail-text-lg text-color">Rs. 5,000 per day</span>
-                                    </td>
-                                    <td>
-                                        <a href = "#" class = "btn btn-primary px-3"><span class = "btn-text">Details</span></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class = "d-flex justify-content-end mt-4">
-                        <a href = "#" class = "btn btn-green"><span class = "btn-text">Book Now</span></a>
+                        <div class = "col-md-6 col-lg-4 mb-4">
+                            <div class = "gallery-card h-100">
+                                <div class = "gallery-card-img">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-4.png') }}" alt = "">
+                                </div>
+                                <div class = "gallery-card-footer mt-3">
+                                    <span class = "d-block text-xs text-silver">14th December 2021</span>
+                                    <h2 class = "text-xl fw-6">AN4Soft Hackathon</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "col-md-6 col-lg-4 mb-4">
+                            <div class = "gallery-card h-100">
+                                <div class = "gallery-card-img">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-5.png') }}" alt = "">
+                                </div>
+                                <div class = "gallery-card-footer mt-3">
+                                    <span class = "d-block text-xs text-silver">14th December 2021</span>
+                                    <h2 class = "text-xl fw-6">DRS PUBG Tournament</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "col-md-6 col-lg-4 mb-4">
+                            <div class = "gallery-card h-100">
+                                <div class = "gallery-card-img">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-6.png') }}" alt = "">
+                                </div>
+                                <div class = "gallery-card-footer mt-3">
+                                    <span class = "d-block text-xs text-silver">14th December 2021</span>
+                                    <h2 class = "text-xl fw-6">Sajjan Raj Baidya Concert</h2>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
+            <!-- gallery view modal -->
+            <div class = "gallery-modal">
+                <div class = "container">
+                    <div class = "gallery-modal-content text-white position-relative">
+                        <button type = "button" class = "gallery-modal-close-btn text-white">
+                            <i class = "fas fa-times"></i>
+                        </button>
+                        <div class = "gallery-modal-header mb-3">
+                            <span class = "d-block text-xs text-silver">14th December 2021</span>
+                            <h2 class = "text-xl fw-6">NADA Car Event </h2>
+                        </div>
+                        <div class = "gallery-modal-body">
+                            <div class = "img-preview">
+                                <img src = "{{ asset('frontendfiles/assets/images/gallery-img-3.png') }}" alt = "">  
+                            </div>
+                            <div class = "img-thumbnails-temp">
+                                <div class = "img-thumbnails d-flex align-items-center justify-content-center">
+                                    <div class = "thumbnail-item">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-1.png') }}" alt = "">
+                                    </div>
+                                    <div class = "thumbnail-item">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-2.png') }}" alt = "">
+                                    </div>
+                                    <div class = "thumbnail-item">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-3.png') }}" alt = "">
+                                    </div>
+                                    <div class = "thumbnail-item">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-4.png') }}" alt = "">
+                                    </div>
+                                    <div class = "thumbnail-item">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-5.png') }}" alt = "">
+                                    </div>
+                                    <div class = "thumbnail-item">
+                                    <img src = "{{ asset('frontendfiles/assets/images/gallery-img-6.png') }}" alt = "">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of gallery view modal -->
         </div>
     </main>
 

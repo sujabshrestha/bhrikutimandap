@@ -21,13 +21,13 @@
 
                     <ul class = "page-navbar-nav d-flex align-items-center">
                         <li class = "page-nav-item">
-                            <a href = "{{route('vendor.home')}}" class = "page-nav-link text-sm">Home</a>
+                            <a href = "{{ route('vendor.home') }}" class = "page-nav-link text-sm">Home</a>
                         </li>
                         <li class = "page-nav-item">
-                            <a href = "gallery.html" class = "page-nav-link text-sm">Gallery</a>
+                            <a href = "{{ route('vendor.gallery') }}" class = "page-nav-link text-sm">Gallery</a>
                         </li>
                         <li class = "page-nav-item">
-                            <a href = "about.html" class = "page-nav-link text-sm">About</a>
+                            <a href = "{{ route('vendor.about') }}" class = "page-nav-link text-sm">About</a>
                         </li>
                     </ul>
                 </div>

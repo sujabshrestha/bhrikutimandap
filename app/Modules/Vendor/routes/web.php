@@ -12,17 +12,13 @@ Route::group(
 function () {
 
 
-    Route::get('/', 'VendorController@index')->name('home');
+    Route::get('/', 'VendorController@home')->name('home');
 
-    Route::get('create', 'VendorController@create')->name('create');
+    Route::get('/gallery', 'VendorController@gallery')->name('gallery');
 
-    Route::post('store', 'VendorController@store')->name('store');
+    Route::get('/about', 'VendorController@about')->name('about');
 
-    Route::get('edit/{slug}', 'VendorController@edit')->name('edit');
 
-    Route::post('update/{slug}', 'VendorController@update')->name('update');
-
-    Route::get('delete/{slug}', 'VendorController@delete')->name('delete');
-
+   
 
 });
