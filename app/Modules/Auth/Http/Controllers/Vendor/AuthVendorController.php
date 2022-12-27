@@ -39,35 +39,18 @@ class AuthVendorController extends Controller
 
     public function loginSubmit(Request $request)
     {
-        try {
-            $user = User::where('email', $request->email)->first();
-
-            if ($user) {
-
-                if ($user->hasRole(['vendor'])) {
-
-                    $credentials = [
-                        'email' => $request->email,
-                        'password' => $request->password,
-                    ];
-
-                    if (Auth::attempt($credentials)) {
-                        Toastr::success('Successfully Logged In.');
-
-                        return redirect()->route('vendor.index');
-                    }
-                    Toastr::error("Credentails Don't Match!!");
-                    return redirect()->back()->with('error', "Something went wrong")->withInput($request->input());
-                }
-                Toastr::error("You Do Not Have Permission To LogIn.");
-                return redirect()->back()->with('error', "You Do Not Have Permission To LogIn.")->withInput($request->input());;
+        // try {
+            $user = $this->auth->loginSubmit($request);
+            if($user == true){
+                Toastr::success("Successfully logged in");
+                return redirect()->route('vendor.login');
             }
-            Toastr::error("User Not Found.");
-            return redirect()->back()->with('error', "Vendor not found")->withInput($request->input());
-        } catch (\Exception $e) {
-            Toastr::error($e->getMessage());
-            return redirect()->back();
-        }
+
+
+        // } catch (\Exception $e) {
+        //     Toastr::error($e->getMessage());
+        //     return redirect()->back();
+        // }
     }
 
 

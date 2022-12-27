@@ -2,6 +2,7 @@
 
 namespace Auth\Repositories\vendor;
 
+use Brian2694\Toastr\Facades\Toastr;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use User\Models\User;
@@ -12,15 +13,34 @@ class AuthVendorRepository implements AuthVendorInterface
 
     public function loginSubmit($request)
     {
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            if (Auth::user()->email_verified_at != null) {
-                return Auth::user();
-            }
-            throw new Exception("Please Verify your email in Mailtrap");
+        if( is_numeric($request->email)){
+            $field = $request->email;
+            $fieldType = 'phone';
+        }else{
+            $field = $request->email;
+            $fieldType = 'email';
         }
-        throw new Exception("Credentials donot match");
+        $user = User::where($fieldType,$field)->first();
+        if($user){
+           if($user->hasRole('vendor')){
+            if($user->email_verified_at != null){
+                $credentials = [
+                    $fieldType => $field,
+                    'password' => $request->password
+                ];
 
+                if (Auth::attempt($credentials)) {
+                    return true;
+                }
+                throw new Exception("Credentials does't match");
+            }
+            throw new Exception("Please verify your email");
+
+           }
+           throw new Exception("You donot have permission");
+
+        }
+        throw new Exception("User not found");
 
     }
 
@@ -28,8 +48,13 @@ class AuthVendorRepository implements AuthVendorInterface
     public function registerSubmit($request)
     {
       $user = new User();
+
       $user->name = $request->name;
-      $user->email = $request->email;
+      if(is_numeric($request->email)){
+        $user->phone = $request->email;
+      }else{
+          $user->email = $request->email;
+      }
       $user->password = bcrypt($request->password);
       if($user->save()){
         $user->assignRole('vendor');
