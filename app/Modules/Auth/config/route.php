@@ -1,18 +1,19 @@
 <?php
 return [
     'prefix' => [
-        'backend' => '',
+        'backend' => 'admin',
         'api' => 'api',
-        'frontend' => ''
+        'vendor' => 'vendor'
     ],
     'namespace' => [
         'backend' => 'Auth\Http\Controllers\Backend',
-        'frontend' => 'Auth\Http\Controllers\Frontend',
+        'vendor' => 'Auth\Http\Controllers\Vendor',
         'api' => 'Auth\Http\Controllers\Api',
     ],
     'as' => [
         'backend' => 'backend.',
 
+        'vendor' => 'vendor.',
         'frontend' => 'frontend.auth.',
     ]
 ];

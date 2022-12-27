@@ -28,7 +28,6 @@
                     <div class="form-content">
 
                         <h1 class="">Log In to <a href="index.html"><span class="brand-name">Venue Booking System</span></a></h1>
-                        <p class="signup-link">New Here? <a href="{{ route('backend.register') }}">Create an account</a></p>
                         <form  method="POST" action="{{ route('backend.loginSubmit') }}" class="text-left">
                             @csrf
                             <div class="form">
@@ -71,9 +70,9 @@
                                     </div>
                                 </div>
 
-                                <div class="field-wrapper">
+                                {{-- <div class="field-wrapper">
                                     <a href="{{ route('backend.forgetPassword') }}" class="forgot-pass-link">Forgot Password?</a>
-                                </div>
+                                </div> --}}
 
                             </div>
                         </form>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Auth\Repositories;
+namespace Auth\Repositories\backend;
 
 
 interface AuthInterface

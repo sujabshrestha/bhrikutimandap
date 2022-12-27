@@ -14,31 +14,7 @@ Route::group([
 
     Route::post('login-submit', 'AuthController@loginSubmit')->name('loginSubmit');
 
-    Route::get('/register','AuthController@register')->name('register');
 
-    Route::post('/register-submit','AuthController@registerSubmit')->name('registersubmit');
-
-    Route::get('/verify/{id}', 'AuthController@verify')->name('verify');
-
-    // Route::get('/password-reset','AuthController@passwordReset')->name('passwordReset');
-
-    // Route::post('/forgot-password','AuthController@forgetPassword')->name('forgetPassword');
-
-    // Route::get('/reset-password/{token}','AuthController@showResetPasswordForm')->name('reset.password.show');
-
-    // Route::post('/reset-password-form','AuthController@resetPasswordFormSubmit')->name('resetPasswordFormSubmit');
-
-
-
-
-
-    Route::get('forget-password', 'AuthController@forgetPassword')->name('forgetPassword');
-
-    Route::post('forgetPassword-submit', 'AuthController@forgetPasswordSubmit')->name('forgetPasswordSubmit');
-
-    Route::get('user/resetpassword/{email}/{token}', 'AuthController@resetPassword')->name('resetPassword');
-
-    Route::post('user/recoverpassword/{email}', 'AuthController@recoverPassword')->name('recoverPassword');
 
 
     Route::group([

@@ -1,12 +1,12 @@
 <?php
 
-namespace Auth\Repositories;
+namespace Auth\Repositories\vendor;
 
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use User\Models\User;
 
-class AuthRepository implements AuthInterface
+class AuthVendorRepository implements AuthVendorInterface
 {
 
 
