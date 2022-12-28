@@ -41,7 +41,7 @@ class AuthVendorController extends Controller
 
     public function loginSubmit(Request $request)
     {
-        try {
+        // try {
 
             if( is_numeric($request->email)){
                 $this->validate($request, [
@@ -51,13 +51,13 @@ class AuthVendorController extends Controller
                 $fieldType = 'phone';
             }else{
                 $this->validate($request, [
-                    'email' =>'required|email|unique:users',
+                    'email' =>'required|email',
                 ]);
                 $field = $request->email;
                 $fieldType = 'email';
             }
 
-            $user = $this->auth->loginSubmit($request);
+            $user = $this->auth->loginSubmit($request, $fieldType, $field);
 
 
             if($user == true){
@@ -66,10 +66,10 @@ class AuthVendorController extends Controller
             }
 
 
-        } catch (\Exception $e) {
-            Toastr::error($e->getMessage());
-            return redirect()->back();
-        }
+        // } catch (\Exception $e) {
+        //     Toastr::error($e->getMessage());
+        //     return redirect()->back();
+        // }
     }
 
 

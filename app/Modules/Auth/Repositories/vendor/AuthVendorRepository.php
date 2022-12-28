@@ -11,7 +11,7 @@ class AuthVendorRepository implements AuthVendorInterface
 {
 
 
-    public function loginSubmit($request)
+    public function loginSubmit($request, $fieldType, $field)
     {
 
         $user = User::where($fieldType,$field)->first();
