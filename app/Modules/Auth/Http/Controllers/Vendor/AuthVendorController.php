@@ -57,7 +57,7 @@ class AuthVendorController extends Controller
                 $fieldType = 'email';
             }
 
-            $user = $this->auth->loginSubmit($request);
+            $user = $this->auth->loginSubmit($request, $fieldType, $field);
 
 
             if($user == true){

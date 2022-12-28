@@ -30,6 +30,7 @@ function () {
 
     Route::post('/venue-booking-filter','VendorBookingController@bookingFilter')->name('bookingFilter');
 
-
-
+    //application
+    Route::get('application', 'ApplicationController@application')->name('application');
+    Route::post('application-store', 'ApplicationController@applicationStore')->name('application.store');
 });

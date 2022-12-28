@@ -4,6 +4,8 @@ namespace Vendor\Providers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
+use Vendor\Repositories\application\ApplicationInterface;
+use Vendor\Repositories\application\ApplicationRepository;
 use Vendor\Repositories\VendorInterface;
 use Vendor\Repositories\VendorRepository;
 
@@ -18,6 +20,7 @@ class VendorServiceProvider extends ServiceProvider
     {
 
         $this->app->bind(VendorInterface::class, VendorRepository::class);
+        $this->app->bind(ApplicationInterface::class, ApplicationRepository::class);
     }
 
     /**

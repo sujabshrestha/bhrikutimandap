@@ -34,5 +34,15 @@ class VendorBookingController extends Controller
         dd('hello');
     }
 
-  
+
+    public function application(){
+        try{
+
+        }catch(\Exception $e){
+            Toastr::success("S")
+        }
+    }
+
+
+
 }
