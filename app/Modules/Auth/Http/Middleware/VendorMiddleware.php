@@ -6,7 +6,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class SuperAdminMiddleware
+class VendorMiddleware
 {
     /**
      * Handle an incoming request.
