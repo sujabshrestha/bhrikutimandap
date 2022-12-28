@@ -29,5 +29,8 @@ function () {
 
     Route::post('/venue-booking','VendorBooking@bookingStore')->name('bookingStore');
 
+    Route::post('/venue-booking-filter','VendorBooking@bookingFilter')->name('bookingFilter');
+
+
 
 });

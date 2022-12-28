@@ -26,6 +26,10 @@ class VendorBookingController extends Controller
         $this->venue = $venue;
     }
 
+    public function bookingFilter(Request $request){
+        dd('hello');
+    }
+
     public function bookingStore(Request $request){
         dd('hello');
     }
