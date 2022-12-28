@@ -25,4 +25,9 @@ function () {
     Route::get('/my-booking','VendorController@myBooking')->name('myBooking');
 
 
+    // Booking Section
+
+    Route::post('/venue-booking','VendorBooking@bookingStore')->name('bookingStore');
+
+
 });
