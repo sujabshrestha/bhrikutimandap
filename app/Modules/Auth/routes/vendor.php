@@ -42,16 +42,16 @@ Route::group([
 
 
     Route::group([
-        // 'middleware' => 'adminMiddleware'
+        'middleware' => 'vendorMiddleware'
     ], function () {
-        Route::get('index', 'AuthVendorController@index')->name('index');
+        // Route::get('index', 'AuthVendorController@index')->name('index');
 
         Route::get('/logout', 'AuthVendorController@logout')->name('logout');
 
         Route::post('/change-password-submit', 'AuthVendorController@changeUserPasswordSubmit')->name('changePasswordSubmit');
 
-        Route::get('/profile', 'AuthVendorController@userProfile')->name('userProfile');
+        // Route::get('/profile', 'AuthVendorController@userProfile')->name('userProfile');
 
-        Route::post('/profile/update/submit', 'AuthVendorController@userProfileUpdate')->name('userProfileUpdate');
+        // Route::post('/profile/update/submit', 'AuthVendorController@userProfileUpdate')->name('userProfileUpdate');
     });
 });

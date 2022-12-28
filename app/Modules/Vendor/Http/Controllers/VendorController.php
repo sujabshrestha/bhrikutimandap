@@ -7,6 +7,7 @@ use Venue\Models\Venue;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
+use CMS\Models\Gallery;
 use Files\Repositories\FileInterface;
 use Venue\Repositories\VenueInterface;
 use Yajra\DataTables\Facades\DataTables;
@@ -28,7 +29,9 @@ class VendorController extends Controller
 
     public function home(){
         try {
-            return view('Vendor::frontend.vendor.home');
+            $venues = Venue::get();
+            // dd($venues);
+            return view('Vendor::frontend.vendor.home',compact('venues'));
         } catch (\Exception $e) {
             Toastr::error($e->getMessage());
             return redirect()->back();
@@ -46,7 +49,8 @@ class VendorController extends Controller
 
     public function gallery(){
         try {
-            return view('Vendor::frontend.others.gallery');
+            $gallery = Gallery::latest()->get();
+            return view('Vendor::frontend.others.gallery', compact('gallery'));
         } catch (\Exception $e) {
             Toastr::error($e->getMessage());
             return redirect()->back();
@@ -84,5 +88,5 @@ class VendorController extends Controller
 
 
 
-  
+
 }

@@ -1,21 +1,23 @@
 <?php
 
-namespace Venue\Models;
+namespace CMS\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use Cviebrock\EloquentSluggable\Sluggable;
-
-class Venue extends Model
+class Gallery extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $fillable = [
+    protected $fillable =[
         'title',
-        'description',
-        'image_id',
-        'price'
+        'slug',
+        'image_id'
+    ];
+
+    protected $appends = [
+        'image'
     ];
 
     public function sluggable(): array
@@ -27,5 +29,8 @@ class Venue extends Model
         ];
     }
 
-    // public
+    public function getImageAttribute(){
+        return url('/').getOrginalUrl($this->image_id);
+    }
+
 }

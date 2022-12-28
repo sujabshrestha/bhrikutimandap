@@ -27,7 +27,7 @@ class VendorBookingController extends Controller
     }
 
     public function bookingFilter(Request $request){
-        dd('hello');
+
     }
 
     public function bookingStore(Request $request){

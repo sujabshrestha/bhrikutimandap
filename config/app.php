@@ -185,7 +185,8 @@ return [
         SiteSetting\Providers\SiteSettingServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Venue\Providers\VenueServiceProvider::class,
-        Vendor\Providers\VendorServiceProvider::class
+        Vendor\Providers\VendorServiceProvider::class,
+        CMS\Providers\CMSServiceProvider::class
 
 
     ],

@@ -6,7 +6,7 @@ Route::group([
     'prefix'=>config('sitesettingroute.prefix.backend'),
     'namespace' => config('sitesettingroute.namespace.backend'),
     'as' => config('sitesettingroute.as.backend'),
-    'middleware' => ['web']
+    'middleware' => ['web', 'adminMiddleware']
 
 ],function(){
 

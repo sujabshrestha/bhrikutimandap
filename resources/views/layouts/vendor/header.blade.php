@@ -20,9 +20,12 @@
                     </div>
 
                     <ul class = "page-navbar-nav d-flex align-items-center">
+                        @auth
+
                         <li class = "page-nav-item">
                             <a href = "{{ route('vendor.home') }}" class = "page-nav-link text-sm">Home</a>
                         </li>
+                        @endauth
                         <li class = "page-nav-item">
                             <a href = "{{ route('vendor.gallery') }}" class = "page-nav-link text-sm">Gallery</a>
                         </li>
@@ -31,7 +34,7 @@
                         </li>
                     </ul>
                 </div>
-                {{-- @auth --}}
+                @auth
                 <div class = "page-navbar-profile d-flex align-items-center">
                     <!-- notification -->
                     <div class = "notification-btn-wrapper position-relative">
@@ -123,10 +126,13 @@
                                         <img src = "{{ asset('frontendfiles/assets/images/avatar.jpg') }}">
                                     </div>
                                     <div class = "ps-2">
-                                        <span class = "text-sm fw-6 my-1 d-inline-block mt-sm-0">Sujab Mohan Shrestha</span>
+                                        @php
+                                            $user = Auth::user();
+                                        @endphp
+                                        <span class = "text-sm fw-6 my-1 d-inline-block mt-sm-0">{{ $user->name }}</span>
                                         <div class = "d-flex align-items-center  justify-content-sm-start">
                                         <img src = "{{ asset('frontendfiles/assets/images/logged-user.svg') }}" class = "icon"> 
-                                            <span class = "text-xs text-color">+977-9842184939</span>
+                                            <span class = "text-xs text-color">{{ $user->phone ?? '' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -164,22 +170,36 @@
                                         </span>
                                         <span class = "text-sm text-color">About</span>
                                     </a>
+
+                                    <a href = "{{ route('vendor.logout')}}" class = "popup-list-item d-flex align-items-center">
+                                        <span class = "icon d-block">
+                                        <img src = "{{ asset('frontendfiles/assets/images/question-mark.svg') }}">
+                                        </span>
+                                        <span class = "text-sm text-color">Logout</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- end of profile -->
                 </div>
-                {{-- @else
+                @else
                 <div class = "page-navbar-btns d-flex">
                     <!-- <button type = "button" class = "navbar-btn btn-white btn-sm">
                         <span class = "btn-text">SignUp</span>
                     </button> -->
-                    <button type = "button" class = "navbar-btn btn-primary btn-sm ms-2">
-                        <span class = "btn-text">Sign Up</span>
-                    </button>
+                    @if(Route::is('vendor.login'))
+                        <a href="{{ route('vendor.register') }}" class = "navbar-btn btn-primary btn-sm ms-2 d-flex align-items-center justify-content-center">
+                            <span class = "text-white">Sign Up</span>
+                        </a>
+                    @else
+                        <a href="{{ route('vendor.login') }}" class = "navbar-btn btn-primary btn-sm ms-2 d-flex align-items-center justify-content-center">
+                            <span class = "text-white">Sign In</span>
+                        </a>
+                    @endif
+                   
                 </div>
-                @endauth --}}
+                @endauth
 
                
             </div>

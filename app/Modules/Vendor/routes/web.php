@@ -7,7 +7,7 @@ Route::group(
     'prefix' => config('vendorRoute.prefix.vendor'),
     'namespace' => config('vendorRoute.namespace.vendor'),
     'as' => config('vendorRoute.as.vendor'),
-    'middleware' => ['web']
+    'middleware' => ['web','vendorMiddleware']
 ],
 function () {
 
@@ -24,12 +24,12 @@ function () {
 
     Route::get('/my-booking','VendorController@myBooking')->name('myBooking');
 
-
     // Booking Section
 
-    Route::post('/venue-booking','VendorBooking@bookingStore')->name('bookingStore');
+    Route::post('/venue-booking-filter','VendorBookingController@bookingFilter')->name('bookingFilter');
 
-    Route::post('/venue-booking-filter','VendorBooking@bookingFilter')->name('bookingFilter');
+    Route::post('/venue-booking','VendorBookingController@bookingStore')->name('bookingStore');
+
 
     //application
     Route::get('application', 'ApplicationController@application')->name('application');

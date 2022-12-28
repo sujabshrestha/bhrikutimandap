@@ -41,7 +41,7 @@ class AuthVendorController extends Controller
 
     public function loginSubmit(Request $request)
     {
-        // try {
+        try {
 
             if( is_numeric($request->email)){
                 $this->validate($request, [
@@ -58,34 +58,32 @@ class AuthVendorController extends Controller
             }
 
             $user = $this->auth->loginSubmit($request, $fieldType, $field);
-
-
             if($user == true){
                 Toastr::success("Successfully logged in");
                 return redirect()->route('vendor.home');
             }
 
 
-        // } catch (\Exception $e) {
-        //     Toastr::error($e->getMessage());
-        //     return redirect()->back();
-        // }
-    }
-
-
-    public function index()
-    {
-        try {
-
-            return view(
-                'Auth::vendor.index',
-
-            );
         } catch (\Exception $e) {
             Toastr::error($e->getMessage());
             return redirect()->back();
         }
     }
+
+
+    // public function index()
+    // {
+    //     try {
+
+    //         return view(
+    //             'Auth::vendor.index',
+
+    //         );
+    //     } catch (\Exception $e) {
+    //         Toastr::error($e->getMessage());
+    //         return redirect()->back();
+    //     }
+    // }
 
     public function register()
     {
@@ -102,15 +100,15 @@ class AuthVendorController extends Controller
         try {
             $user = $this->auth->registerSubmit($request);
             if ($user) {
-                $data=[
-                    'email'=>$user->email,
-                    'name'=>$user->name,
-                    'phone_no'=>$user->phone_no,
-                    'id'=>$user->id,
-                ];
-                $sendVerificationUserMailJob=(new VerifyVendorJob($data))
-                                                ->delay(Carbon::now()->addSeconds(3));
-                dispatch($sendVerificationUserMailJob);
+                // $data=[
+                //     'email'=>$user->email,
+                //     'name'=>$user->name,
+                //     'phone_no'=>$user->phone_no,
+                //     'id'=>$user->id,
+                // ];
+                // $sendVerificationUserMailJob=(new VerifyVendorJob($data))
+                //                                 ->delay(Carbon::now()->addSeconds(3));
+                // dispatch($sendVerificationUserMailJob);
                 Toastr::success('Registration Success !');
                 return redirect()->route('vendor.login');
             }
