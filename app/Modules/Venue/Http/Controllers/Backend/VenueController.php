@@ -48,7 +48,7 @@ class VenueController extends Controller
                })
                 // ->addColumn('status', function ($row) {
                 //     return '<select id="select" class="form-control" name"select">
-                //                       <option  >Available</option>
+                //                       <option >Available</option>
                 //                       <option>Pending</option>
                 //                       <option>Completed</option>
                 //                 </select> ';

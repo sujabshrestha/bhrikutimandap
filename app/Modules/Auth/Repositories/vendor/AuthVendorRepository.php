@@ -13,13 +13,7 @@ class AuthVendorRepository implements AuthVendorInterface
 
     public function loginSubmit($request)
     {
-        if( is_numeric($request->email)){
-            $field = $request->email;
-            $fieldType = 'phone';
-        }else{
-            $field = $request->email;
-            $fieldType = 'email';
-        }
+
         $user = User::where($fieldType,$field)->first();
         if($user){
            if($user->hasRole('vendor')){

@@ -5,9 +5,11 @@ namespace Auth\Http\Controllers\Vendor;
 use App\GlobalServices\ResponseService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth\Jobs\VerifyVendorJob;
 use Auth\Models\PasswordReset;
 use Auth\Repositories\vendor\AuthVendorInterface;
 use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
 use Files\Repositories\FileInterface;
 use Illuminate\Support\Facades\Auth;
 use User\Models\User;
@@ -39,18 +41,35 @@ class AuthVendorController extends Controller
 
     public function loginSubmit(Request $request)
     {
-        // try {
+        try {
+
+            if( is_numeric($request->email)){
+                $this->validate($request, [
+                    'email' => [ 'required', 'regex:/^((984)|(985)|(986)|(974)|(975)|(980)|(981)|(982)|(961)|(962)|(988)|(972)|(963))[0-9]{7}/' ] ,
+                ]);
+                $field = $request->email;
+                $fieldType = 'phone';
+            }else{
+                $this->validate($request, [
+                    'email' =>'required|email|unique:users',
+                ]);
+                $field = $request->email;
+                $fieldType = 'email';
+            }
+
             $user = $this->auth->loginSubmit($request);
+
+
             if($user == true){
                 Toastr::success("Successfully logged in");
-                return redirect()->route('vendor.login');
+                return redirect()->route('vendor.home');
             }
 
 
-        // } catch (\Exception $e) {
-        //     Toastr::error($e->getMessage());
-        //     return redirect()->back();
-        // }
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
+        }
     }
 
 
@@ -83,15 +102,15 @@ class AuthVendorController extends Controller
         try {
             $user = $this->auth->registerSubmit($request);
             if ($user) {
-                // $data=[
-                //     'email'=>$user->email,
-                //     'name'=>$user->name,
-                //     'phone_no'=>$user->phone_no,
-                //     'id'=>$user->id,
-                // ];
-                // $sendVerificationUserMailJob=(new SendVerificationUserEmail($data))
-                //                                 ->delay(Carbon::now()->addSeconds(3));
-                // dispatch($sendVerificationUserMailJob);
+                $data=[
+                    'email'=>$user->email,
+                    'name'=>$user->name,
+                    'phone_no'=>$user->phone_no,
+                    'id'=>$user->id,
+                ];
+                $sendVerificationUserMailJob=(new VerifyVendorJob($data))
+                                                ->delay(Carbon::now()->addSeconds(3));
+                dispatch($sendVerificationUserMailJob);
                 Toastr::success('Registration Success !');
                 return redirect()->route('vendor.login');
             }
@@ -131,7 +150,17 @@ class AuthVendorController extends Controller
 
     public function forgetPasswordSubmit(Request $request){
         try{
-            $user = User::where('email', $request->email)->first();
+
+            if( is_numeric($request->email)){
+
+                $field = $request->email;
+                $fieldType = 'phone';
+            }else{
+
+                $field = $request->email;
+                $fieldType = 'email';
+            }
+            $user = User::where( $fieldType,  $field)->first();
             if($user){
 
                 $token = Str::random(20);
@@ -139,13 +168,13 @@ class AuthVendorController extends Controller
 
                 $details = [
                     'name' => $user->name,
-                    'email' => $user->email,
+                    'email' => $user->email ?? $user->phone,
                     'token' => $token,
                 ];
 
 
                 PasswordReset::create([
-                    'email' => $user->email,
+                    'email' => $user->email ?? $user->phone,
                     'token' => $token
                 ]);
 
@@ -167,8 +196,10 @@ class AuthVendorController extends Controller
 
     public function resetPassword($email, $token){
         try{
+
             $passwordreset = PasswordReset::where('email', $email)
             ->where('token', $token)->first();
+
             $token = $passwordreset->token;
             if($passwordreset){
                 return view('Auth::vendor.passwordResetForm', compact('email', 'token'));
@@ -185,8 +216,19 @@ class AuthVendorController extends Controller
 
     public function recoverPassword($email, Request $request){
         try{
-            $user = User::where('email', $email)->first();
+            if( is_numeric($request->email)){
+
+                $field = $request->email;
+                $fieldType = 'phone';
+            }else{
+
+                $field = $request->email;
+                $fieldType = 'email';
+            }
+            $user = User::where( $fieldType,  $field)->first();
+
             $passwordreset = PasswordReset::where('email', $email)->where('token', $request->token)->first();
+
 
             if($user){
                 $user->password = bcrypt($request->password);

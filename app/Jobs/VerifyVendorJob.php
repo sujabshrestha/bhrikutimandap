@@ -1,16 +1,15 @@
 <?php
 
-namespace Auth\Jobs;
+namespace App\Jobs;
 
-use Auth\Mail\UserRegisterMail;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Mail;
 
-class UserRegisterJob implements ShouldQueue
+class VerifyVendorJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -19,10 +18,9 @@ class UserRegisterJob implements ShouldQueue
      *
      * @return void
      */
-    protected $details;
-    public function __construct($details)
+    public function __construct()
     {
-        $this->details = $details;
+        //
     }
 
     /**
@@ -32,7 +30,6 @@ class UserRegisterJob implements ShouldQueue
      */
     public function handle()
     {
-        $mail = new UserRegisterMail($this->details);
-        Mail::to($this->details['email'])->send($mail);
+        //
     }
 }

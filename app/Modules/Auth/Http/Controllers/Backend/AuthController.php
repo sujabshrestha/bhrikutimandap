@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Auth\Http\Requests\LoginRequest;
 use Auth\Mail\UserForgetPasswordMail;
 use Auth\Models\PasswordReset;
-use Auth\Repositories\AuthInterface;
+use Auth\Repositories\backend\AuthInterface;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Str;

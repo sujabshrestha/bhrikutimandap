@@ -36,9 +36,9 @@ Route::group([
 
     Route::post('forgetPassword-submit', 'AuthVendorController@forgetPasswordSubmit')->name('forgetPasswordSubmit');
 
-    Route::get('user/resetpassword/{email}/{token}', 'AuthVendorController@resetPassword')->name('resetPassword');
+    Route::get('resetpassword/{email}/{token}', 'AuthVendorController@resetPassword')->name('resetPassword');
 
-    Route::post('user/recoverpassword/{email}', 'AuthVendorController@recoverPassword')->name('recoverPassword');
+    Route::post('recoverpassword/{email}', 'AuthVendorController@recoverPassword')->name('recoverPassword');
 
 
     Route::group([
