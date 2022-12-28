@@ -26,8 +26,7 @@ class VendorController extends Controller
         $this->venue = $venue;
     }
 
-    public function home()
-    {
+    public function home(){
         try {
             return view('Vendor::frontend.vendor.home');
         } catch (\Exception $e) {
@@ -36,25 +35,53 @@ class VendorController extends Controller
         }
     }
 
-    public function about()
-    {
+    public function about(){
         try {
-            return view('Vendor::frontend.vendor.about');
+            return view('Vendor::frontend.others.about');
         } catch (\Exception $e) {
             Toastr::error($e->getMessage());
             return redirect()->back();
         }
     }
 
-    public function gallery()
-    {
+    public function gallery(){
         try {
-            return view('Vendor::frontend.vendor.gallery');
+            return view('Vendor::frontend.others.gallery');
         } catch (\Exception $e) {
             Toastr::error($e->getMessage());
             return redirect()->back();
         }
     }
+
+    public function rules(){
+        try {
+            return view('Vendor::frontend.others.rules');
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function myAccount(){
+        try {
+            return view('Vendor::frontend.userProfile.myAccount');
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+
+    public function myBooking(){
+        try {
+            return view('Vendor::frontend.userProfile.myBooking');
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+
 
 
   

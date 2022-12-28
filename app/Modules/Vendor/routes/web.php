@@ -12,13 +12,17 @@ Route::group(
 function () {
 
 
-    Route::get('/', 'VendorController@home')->name('home');
+    Route::get('/','VendorController@home')->name('home');
 
-    Route::get('/gallery', 'VendorController@gallery')->name('gallery');
+    Route::get('/gallery','VendorController@gallery')->name('gallery');
 
-    Route::get('/about', 'VendorController@about')->name('about');
+    Route::get('/about','VendorController@about')->name('about');
 
+    Route::get('/rules','VendorController@rules')->name('rules');
 
-   
+    Route::get('/my-account','VendorController@myAccount')->name('myAccount');
+
+    Route::get('/my-booking','VendorController@myBooking')->name('myBooking');
+
 
 });

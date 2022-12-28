@@ -6,4 +6,6 @@
    <!-- scripts -->
    <script src = "{{ asset('frontendfiles/assets/js/script.js') }} "></script>
 
+   <script src = "{{asset('frontendfiles/assets/plugins/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.js')}}"></script>
+
    @stack('scripts')
