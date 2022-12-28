@@ -5,4 +5,7 @@
  <!-- custom css -->
  <link rel="stylesheet" href="{{ asset('frontendfiles/assets/css/main.css') }} ">
 
+ <!-- date picker -->
+ <link rel = "stylesheet" href = "{{ asset('frontendfiles/assets/plugins/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.standalone.css')}}">
+
  @stack('styles')
