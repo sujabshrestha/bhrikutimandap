@@ -1,13 +1,15 @@
 <?php
 
-namespace App;
+namespace Vendor\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Venue\Models\Venue;
 
 class Booking extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'status',
         'payment_status',
@@ -17,5 +19,9 @@ class Booking extends Model
     ];
 
     protected $date = ['from_date','to_date'];
+
+    public function venues(){
+        return $this->belongsToMany(Venue::class,'venue_bookings');
+    }
 
 }

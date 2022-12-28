@@ -17,7 +17,7 @@ class CreateBookingsTable extends Migration
             $table->id();
            
             $table->unsignedBigInteger('vendor_id');
-            $table->dateTime('form_date');
+            $table->dateTime('from_date');
             $table->dateTime('to_date');
             $table->enum('status',['Approved','Declined','Pending']);
             $table->enum('payment_status',['Approved','Declined','Pending']);
