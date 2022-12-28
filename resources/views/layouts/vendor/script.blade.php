@@ -8,4 +8,89 @@
 
    <script src = "{{asset('frontendfiles/assets/plugins/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.js')}}"></script>
 
+   <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+
+{!! Toastr::message() !!}
+<script>
+    function loader() {
+        $.blockUI({
+            message: '<div class="spinner-border"><span class="sr-only">Loading...</span> </div>',
+            fadeIn: 100,
+
+            overlayCSS: {
+                backgroundColor: '#1b2024',
+                opacity: 0.8,
+                zIndex: 1200,
+                cursor: 'wait'
+            },
+            css: {
+                border: 0,
+                color: '#fff',
+                zIndex: 1201,
+                padding: 0,
+                backgroundColor: 'transparent'
+            }
+        });
+    }
+</script>
+
+<script>
+    $(document).on('submit', '#submit-form', function(e) {
+
+        e.preventDefault();
+        var currentevent = $(this);
+        currentevent.attr('disabled');
+        var form = new FormData($('#submit-form')[0]);
+        var params = $('#submit-form').serializeArray();
+        var route = $(this).attr('action');
+        console.log(route);
+        $.each(params, function(i, val) {
+            form.append(val.name, val.value)
+        });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: route,
+            contentType: false,
+            processData: false,
+            data: form,
+            beforeSend: function(data) {
+                loader();
+            },
+            success: function(data) {
+
+                toastr.success(data.message);
+                $('#global-table').DataTable().ajax.reload();
+                $('#summernote-editor').summernote('code', '');
+                $('#submit-form').trigger("reset");
+                $('#globalModal').modal('hide');
+
+                currentevent.attr('disabled', false);
+
+            },
+            error: function(err) {
+                if (err.status == 422) {
+                    $.each(err.responseJSON.errors, function(i, error) {
+                        var el = $(document).find('[name="' + i + '"]');
+                        el.after($('<span style="color: red;">' + error[0] + '</span>')
+                            .fadeOut(4000));
+                    });
+                }
+
+                currentevent.attr('disabled', false);
+            },
+            complete: function() {
+                $.unblockUI();
+            }
+        });
+
+    });
+</script>
+
    @stack('scripts')

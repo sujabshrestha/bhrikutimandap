@@ -20,7 +20,7 @@
                                 <div class = "input-group-text">
                                     <img src = "{{ asset('frontendFiles/assets/images/icons/calendar-search.svg')}}">
                                 </div>
-                                <input type = "text" class = "form-control check-in-datepicker" placeholder="Check-In" name = "">
+                                <input type = "text" class = "form-control check-in-datepicker" placeholder="Check-In" name = "from_date">
                             </div>
                         </div>
 
@@ -29,7 +29,7 @@
                                 <div class = "input-group-text">
                                     <img src = "{{ asset('frontendFiles/assets/images/icons/calendar-search.svg')}}">
                                 </div>
-                                <input type = "text" class = "form-control check-out-datepicker" placeholder="Check-Out" name = "">
+                                <input type = "text" class = "form-control check-out-datepicker" placeholder="Check-Out" name = "to_date">
                             </div>
                         </div>
 

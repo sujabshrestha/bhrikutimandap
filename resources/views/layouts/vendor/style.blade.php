@@ -8,4 +8,6 @@
  <!-- date picker -->
  <link rel = "stylesheet" href = "{{ asset('frontendfiles/assets/plugins/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.standalone.css')}}">
 
+<link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
  @stack('styles')

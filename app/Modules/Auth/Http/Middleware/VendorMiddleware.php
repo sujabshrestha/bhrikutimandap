@@ -6,7 +6,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class VendorMiddleware
+class SuperAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,19 +17,22 @@ class VendorMiddleware
      */
     public function handle($request, Closure $next)
     {
+        
         if (Auth::check() ) {
             $user = Auth::user();
-            if($user->hasRole('admin')){
+            if($user->hasRole('vendor')){
                 return $next($request);
             }else{
                 Auth::logout();
                 Toastr::error('You do not have permission.');
-                return redirect()->route('backend.auth.login');
+                return redirect()->route('vendor.login');
             }
         }
         else{
             Toastr::error('Please Login Before Proceeding!!');
-            return redirect()->route('backend.auth.login');
+            return redirect()->route('vendor.login');
         }
+
+    
     }
 }

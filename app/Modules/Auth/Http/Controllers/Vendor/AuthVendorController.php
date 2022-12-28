@@ -41,7 +41,7 @@ class AuthVendorController extends Controller
 
     public function loginSubmit(Request $request)
     {
-        try {
+        // try {
 
             if( is_numeric($request->email)){
                 $this->validate($request, [
@@ -51,7 +51,7 @@ class AuthVendorController extends Controller
                 $fieldType = 'phone';
             }else{
                 $this->validate($request, [
-                    'email' =>'required|email|unique:users',
+                    'email' =>'required|email',
                 ]);
                 $field = $request->email;
                 $fieldType = 'email';
@@ -66,10 +66,10 @@ class AuthVendorController extends Controller
             }
 
 
-        } catch (\Exception $e) {
-            Toastr::error($e->getMessage());
-            return redirect()->back();
-        }
+        // } catch (\Exception $e) {
+        //     Toastr::error($e->getMessage());
+        //     return redirect()->back();
+        // }
     }
 
 
@@ -102,15 +102,15 @@ class AuthVendorController extends Controller
         try {
             $user = $this->auth->registerSubmit($request);
             if ($user) {
-                $data=[
-                    'email'=>$user->email,
-                    'name'=>$user->name,
-                    'phone_no'=>$user->phone_no,
-                    'id'=>$user->id,
-                ];
-                $sendVerificationUserMailJob=(new VerifyVendorJob($data))
-                                                ->delay(Carbon::now()->addSeconds(3));
-                dispatch($sendVerificationUserMailJob);
+                // $data=[
+                //     'email'=>$user->email,
+                //     'name'=>$user->name,
+                //     'phone_no'=>$user->phone_no,
+                //     'id'=>$user->id,
+                // ];
+                // $sendVerificationUserMailJob=(new VerifyVendorJob($data))
+                //                                 ->delay(Carbon::now()->addSeconds(3));
+                // dispatch($sendVerificationUserMailJob);
                 Toastr::success('Registration Success !');
                 return redirect()->route('vendor.login');
             }
