@@ -35,13 +35,7 @@ class VendorBookingController extends Controller
     }
 
 
-    public function application(){
-        try{
-
-        }catch(\Exception $e){
-            Toastr::success("S")
-        }
-    }
+    
 
 
 

@@ -32,17 +32,18 @@ class ApplicationController extends Controller
 
     public function applicationStore(Request $request)
     {
-        try {
+        // try {
             // dd($request->all());
-
 
             if ($request->uploadfiles) {
                 foreach($request->uploadfiles as $uploadfile){
                     $application = new Application();
-                    $application->vendor_id == Auth::id();
 
-                    $uploaded = $this->file->storeFile($request->uploadfile);
-                    $application->file_id = $$uploaded->id;
+
+                    $application->vendor_id = Auth::user()->id;
+
+                    $uploaded = $this->file->storeFile($uploadfile);
+                    $application->file_id = $uploaded->id;
                     $application->save();
                 }
 
@@ -52,9 +53,9 @@ class ApplicationController extends Controller
             }
             Toastr::error("Something went wrong");
             return redirect()->back();
-        } catch (\Exception $e) {
-            Toastr::error($e->getMessage());
-            return redirect()->back();
-        }
+        // } catch (\Exception $e) {
+        //     Toastr::error($e->getMessage());
+        //     return redirect()->back();
+        // }
     }
 }
