@@ -28,7 +28,9 @@ class VendorController extends Controller
 
     public function home(){
         try {
-            return view('Vendor::frontend.vendor.home');
+            $venues = Venue::get();
+            // dd($venues);
+            return view('Vendor::frontend.vendor.home',compact('venues'));
         } catch (\Exception $e) {
             Toastr::error($e->getMessage());
             return redirect()->back();

@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title')</title>
     <meta name="description" content="">
+    <script>
+        window.laravel = {
+            csrfToken: '{{ csrf_token() }}'
+        }
+    </script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @include('layouts.vendor.style')
 </head>

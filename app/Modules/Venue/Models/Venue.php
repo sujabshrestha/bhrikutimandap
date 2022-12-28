@@ -26,4 +26,6 @@ class Venue extends Model
             ]
         ];
     }
+
+    // public
 }

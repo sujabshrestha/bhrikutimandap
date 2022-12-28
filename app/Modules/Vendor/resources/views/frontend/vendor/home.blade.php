@@ -1,8 +1,8 @@
 @extends('layouts.vendor.master')
 
-@section('title', 'Venue Index')
+@section('title', 'Home')
 
-@section('breadcrumb', 'Venue Index')
+@section('breadcrumb', 'Home')
 @push('styles')
     <link href="{{ asset('backendfiles/plugins/file-upload/file-upload-with-preview.min.css') }} " rel="stylesheet"
         type="text/css" />
@@ -13,7 +13,7 @@
     <main class = "page-index">
         <div class = "container">
             <section class = "sc-booking-selection px-3">
-                <form>
+                <form id="submit-form" action="{{ route('vendor.bookingFilter') }}">
                     <div class = "booking-selection-content d-lg-flex justify-content-lg-center">
                         <div class = "booking-selection-item d-flex align-items-center">
                             <div class = "input-group">

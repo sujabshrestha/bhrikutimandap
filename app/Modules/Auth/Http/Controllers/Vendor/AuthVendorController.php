@@ -41,7 +41,7 @@ class AuthVendorController extends Controller
 
     public function loginSubmit(Request $request)
     {
-        // try {
+        try {
 
             if( is_numeric($request->email)){
                 $this->validate($request, [
@@ -58,34 +58,32 @@ class AuthVendorController extends Controller
             }
 
             $user = $this->auth->loginSubmit($request, $fieldType, $field);
-
-
             if($user == true){
                 Toastr::success("Successfully logged in");
                 return redirect()->route('vendor.home');
             }
 
 
-        // } catch (\Exception $e) {
-        //     Toastr::error($e->getMessage());
-        //     return redirect()->back();
-        // }
-    }
-
-
-    public function index()
-    {
-        try {
-
-            return view(
-                'Auth::vendor.index',
-
-            );
         } catch (\Exception $e) {
             Toastr::error($e->getMessage());
             return redirect()->back();
         }
     }
+
+
+    // public function index()
+    // {
+    //     try {
+
+    //         return view(
+    //             'Auth::vendor.index',
+
+    //         );
+    //     } catch (\Exception $e) {
+    //         Toastr::error($e->getMessage());
+    //         return redirect()->back();
+    //     }
+    // }
 
     public function register()
     {

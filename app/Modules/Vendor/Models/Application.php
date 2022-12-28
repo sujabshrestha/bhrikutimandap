@@ -16,14 +16,14 @@ class Application extends Model
 
     protected $fillable = [
         'file_id',
-        'vendor_id'
+        'booking_id'
     ];
 
     public function getFileAttribute(){
         return url('/').getOrginalUrl($this->file_id);
     }
 
-    public function vendor(){
-        return $this->belongsTo(User::class, 'vendor_id');
-    }
+    // public function vendor(){
+    //     return $this->belongsTo(User::class, 'vendor_id');
+    // }
 }

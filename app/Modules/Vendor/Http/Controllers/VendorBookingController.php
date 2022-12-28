@@ -27,22 +27,12 @@ class VendorBookingController extends Controller
     }
 
     public function bookingFilter(Request $request){
-        dd('hello');
+        
     }
 
     public function bookingStore(Request $request){
         dd('hello');
     }
-
-
-    public function application(){
-        try{
-
-        }catch(\Exception $e){
-            Toastr::success("S")
-        }
-    }
-
 
 
 }

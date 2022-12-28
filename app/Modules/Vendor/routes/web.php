@@ -26,9 +26,10 @@ function () {
 
     // Booking Section
 
+    Route::post('/venue-booking-filter','VendorBookingController@bookingFilter')->name('bookingFilter');
+
     Route::post('/venue-booking','VendorBookingController@bookingStore')->name('bookingStore');
 
-    Route::post('/venue-booking-filter','VendorBookingController@bookingFilter')->name('bookingFilter');
 
     //application
     Route::get('application', 'ApplicationController@application')->name('application');
