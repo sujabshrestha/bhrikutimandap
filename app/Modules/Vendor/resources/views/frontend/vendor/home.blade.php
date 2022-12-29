@@ -61,9 +61,17 @@
 @endsection
 
 @push('scripts')
+   
 
 
 <script>
+    var now = "{{ Carbon\Carbon::now()->addMonth()->format("m/d/Y") }}";
+    $('.check-in-datepicker').datepicker('setStartDate',now);
+    $('.check-out-datepicker').datepicker('setStartDate',now);
+
+
+
+
      $(document).on('submit', '#filter-form', function(e) {
 
         e.preventDefault();
