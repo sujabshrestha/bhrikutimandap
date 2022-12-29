@@ -15,6 +15,10 @@
 .required{
     color: red;
 }
+.custom-file-container__image-preview{
+    margin-top: 6px !important;
+    margin-bottom: 24px !important; 
+}
 
 </style>
 
@@ -89,6 +93,53 @@
     @else
         var firstUpload = new FileUploadWithPreview('qrImage');
     @endif
+
+    @if (getThumbnailUrl(returnSiteSetting('venue_image')))
+        var importedBaseImage = "{{ getThumbnailUrl(returnSiteSetting('venue_image')) }}";
+        var firstUpload = new FileUploadWithPreview('venueImage', {
+            images: {
+                    baseImage: importedBaseImage,
+                },
+        });
+    @else
+        var firstUpload = new FileUploadWithPreview('venueImage');
+    @endif
+
+    @if (getThumbnailUrl(returnSiteSetting('about_first_image')))
+        var importedBaseImage = "{{ getThumbnailUrl(returnSiteSetting('about_first_image')) }}";
+        var firstUpload = new FileUploadWithPreview('aboutFirstImage', {
+            images: {
+                    baseImage: importedBaseImage,
+                },
+        });
+    @else
+        var firstUpload = new FileUploadWithPreview('aboutFirstImage');
+    @endif
+
+    @if (getThumbnailUrl(returnSiteSetting('about_second_image')))
+        var importedBaseImage = "{{ getThumbnailUrl(returnSiteSetting('about_second_image')) }}";
+        var firstUpload = new FileUploadWithPreview('aboutSecondImage', {
+            images: {
+                    baseImage: importedBaseImage,
+                },
+        });
+    @else
+        var firstUpload = new FileUploadWithPreview('aboutSecondImage');
+    @endif
+
+    @if (getThumbnailUrl(returnSiteSetting('about_third_image')))
+        var importedBaseImage = "{{ getThumbnailUrl(returnSiteSetting('about_third_image')) }}";
+        var firstUpload = new FileUploadWithPreview('aboutThirdImage', {
+            images: {
+                    baseImage: importedBaseImage,
+                },
+        });
+    @else
+        var firstUpload = new FileUploadWithPreview('aboutThirdImage');
+    @endif
+
+
+    
 
 </script>
 

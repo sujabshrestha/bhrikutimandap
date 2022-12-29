@@ -97,6 +97,67 @@ class SiteSettingController extends Controller
                     $inputValue =  $favid;
                 }
 
+                if ( $inputKey == 'venue_image') {
+                    $sitesetting = SiteSetting::where('key', '=', $inputKey)->first();
+
+                    if($sitesetting)
+                    {
+                        if(file_exists($sitesetting->value)){
+                            unlink($sitesetting->value);
+                        }
+                    }
+                    $uploaded = $this->file->storeFile($request->venue_image);
+                    if ($uploaded) {
+                        $favid = $uploaded->id;
+                    }
+                    $inputValue =  $favid;
+                }
+                if ( $inputKey == 'about_first_image') {
+                    $sitesetting = SiteSetting::where('key', '=', $inputKey)->first();
+
+                    if($sitesetting)
+                    {
+                        if(file_exists($sitesetting->value)){
+                            unlink($sitesetting->value);
+                        }
+                    }
+                    $uploaded = $this->file->storeFile($request->about_first_image);
+                    if ($uploaded) {
+                        $favid = $uploaded->id;
+                    }
+                    $inputValue =  $favid;
+                }
+
+                if ( $inputKey == 'about_second_image') {
+                    $sitesetting = SiteSetting::where('key', '=', $inputKey)->first();
+
+                    if($sitesetting)
+                    {
+                        if(file_exists($sitesetting->value)){
+                            unlink($sitesetting->value);
+                        }
+                    }
+                    $uploaded = $this->file->storeFile($request->about_second_image);
+                    if ($uploaded) {
+                        $favid = $uploaded->id;
+                    }
+                    $inputValue =  $favid;
+                }
+                if ( $inputKey == 'about_third_image') {
+                    $sitesetting = SiteSetting::where('key', '=', $inputKey)->first();
+
+                    if($sitesetting)
+                    {
+                        if(file_exists($sitesetting->value)){
+                            unlink($sitesetting->value);
+                        }
+                    }
+                    $uploaded = $this->file->storeFile($request->about_third_image);
+                    if ($uploaded) {
+                        $favid = $uploaded->id;
+                    }
+                    $inputValue =  $favid;
+                }
                 $sitesubmit = SiteSetting::updateOrCreate(['key'=>$inputKey],[
                     'value' => $inputValue,
                 ]);

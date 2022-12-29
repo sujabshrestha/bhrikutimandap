@@ -52,7 +52,7 @@
                                 <div class = "notify-list-group">
 
 
-                                    @foreach (vendorBookingApprovals() as $booking)
+                                    {{-- @foreach (vendorBookingApprovals() as $booking)
 
 
 
@@ -83,7 +83,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    @endforeach
+                                    @endforeach --}}
 
                                     <div class = "notify-list-item border-bottom">
                                         <div class = "notify-list-item-icon">

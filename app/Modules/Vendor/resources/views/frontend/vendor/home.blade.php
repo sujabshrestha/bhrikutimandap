@@ -6,6 +6,11 @@
 @push('styles')
     <link href="{{ asset('backendfiles/plugins/file-upload/file-upload-with-preview.min.css') }} " rel="stylesheet"
         type="text/css" />
+        <style>
+            .datepicker-days .disabled{
+                color: #d4cece !important;
+            }
+        </style>
 @endpush
 
 @section('content')
@@ -69,10 +74,7 @@
     $('.check-in-datepicker').datepicker('setStartDate',now);
     $('.check-out-datepicker').datepicker('setStartDate',now);
 
-
-
-
-     $(document).on('submit', '#filter-form', function(e) {
+    $(document).on('submit', '#filter-form', function(e) {
 
         e.preventDefault();
         var currentevent = $(this);
