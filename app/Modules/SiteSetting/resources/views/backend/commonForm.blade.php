@@ -264,7 +264,7 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="form-group">
                                 <div class="custom-file-container" data-upload-id="aboutUsImage">
-                                    <label>About Us Image <a href="javascript:void(0)"
+                                    <label>About Venue Image <a href="javascript:void(0)"
                                             class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                     <label class="custom-file-container__custom-file">
                                         <input type="file"
@@ -281,7 +281,7 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="form-group">
                                 <div class="custom-file-container" data-upload-id="venueImage">
-                                    <label>Venue Image <a href="javascript:void(0)"
+                                    <label>Venue Site Image <a href="javascript:void(0)"
                                             class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                     <label class="custom-file-container__custom-file">
                                         <input type="file"

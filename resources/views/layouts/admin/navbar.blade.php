@@ -4,7 +4,7 @@
         <ul class="navbar-item theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
                 <a href="{{ route('backend.dashboard')}}">
-                    <img src="{{ asset('backendFiles/assets/img/90x90.jpg')}}" class="navbar-logo" alt="logo">
+                    <img src="{{ getOrginalUrl(returnSiteSetting('logo')) ?? asset('backendFiles/assets/img/90x90.jpg')}}" class="navbar-logo" alt="logo">
                 </a>
             </li>
             <li class="nav-item theme-text">
