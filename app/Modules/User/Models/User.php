@@ -2,6 +2,7 @@
 
 namespace User\Models;
 
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Vendor\Models\Application;
+use Vendor\Models\Booking;
 
 class User extends Authenticatable
 {
@@ -23,7 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profile_image_id'
+        'profile_image_id','phone','address'
     ];
 
     /**
@@ -49,4 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Application::class, 'vendor_id');
     }
 
+    public function organization(){
+        return $this->hasOne(Organization::class);
+    }
+
+    public function bookings(){
+        return $this->hasMany(Booking::class);
+    }
 }

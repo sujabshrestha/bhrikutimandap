@@ -13,14 +13,14 @@
     <main class = "page-index">
         <div class = "container">
             <section class = "sc-booking-selection px-3">
-                <form id="submit-form" action="{{ route('vendor.bookingFilter') }}">
+                <form id="filter-form" action="{{ route('vendor.bookingFilter') }}">
                     <div class = "booking-selection-content d-lg-flex justify-content-lg-center">
                         <div class = "booking-selection-item d-flex align-items-center">
                             <div class = "input-group">
                                 <div class = "input-group-text">
                                     <img src = "{{ asset('frontendFiles/assets/images/icons/calendar-search.svg')}}">
                                 </div>
-                                <input type = "text" class = "form-control check-in-datepicker" placeholder="Check-In" name = "from_date">
+                                <input type = "text"  class = "form-control check-in-datepicker" placeholder="Check-In" name = "from_date">
                             </div>
                         </div>
 
@@ -46,29 +46,11 @@
                     <div class = "sc-title">
                         <h3>Availability list</h3>
                     </div>
-                    <div class = "avail-data">
-                        <table class = "table">
-                            <thead>
-                                <tr>
-                                    <th class = "avail-text-lg">Check</th>
-                                    <th class = "text-start avail-text-lg">Venue</th>
-                                    <th class = "avail-text-lg">Time</th>
-                                    <th class = "avail-text-lg">Status</th>
-                                    <th class = "avail-text-lg">Cost</th>
-                                    <th class = "avail-text-lg">View</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <form action="{{ route('vendor.bookingStore')}}" method="POST">
-                                    @csrf
-                                    @include('Vendor::frontend.vendor.appendVenueList')
-                                <form>
-                            </tbody>
-                        </table>
+                   
+                    <div class="venueListTable">
+                    
                     </div>
-                    <div class = "d-flex justify-content-end mt-4">
-                        <button type="submit" class = "btn btn-green"><span class = "btn-text">Book Now</span></button>
-                    </div>
+
                 </div>
             </section>
         </div>
@@ -79,6 +61,64 @@
 @endsection
 
 @push('scripts')
+
+
+<script>
+     $(document).on('submit', '#filter-form', function(e) {
+
+        e.preventDefault();
+        var currentevent = $(this);
+        currentevent.attr('disabled');
+        var form = new FormData($('#filter-form')[0]);
+        var params = $('#filter-form').serializeArray();
+        var route = $(this).attr('action');
+        console.log(route);
+        $.each(params, function(i, val) {
+            form.append(val.name, val.value)
+        });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: route,
+            contentType: false,
+            processData: false,
+            data: form,
+            beforeSend: function(data) {
+                loader();
+            },
+            success: function(data) {
+
+                toastr.success(data.message);
+                // $('#global-table').DataTable().ajax.reload();
+                // $('#summernote-editor').summernote('code', '');
+                // $('#filter-form').trigger("reset");
+                // $('#globalModal').modal('hide');
+                $('.venueListTable').html(data.data.view);
+                currentevent.attr('disabled', false);
+
+            },
+            error: function(err) {
+                if (err.status == 422) {
+                    $.each(err.responseJSON.errors, function(i, error) {
+                        var el = $(document).find('[name="' + i + '"]');
+                        el.after($('<span style="color: red;">' + error[0] + '</span>')
+                            .fadeOut(4000));
+                    });
+                }
+
+                currentevent.attr('disabled', false);
+            },
+            complete: function() {
+                $.unblockUI();
+            }
+        });
+
+        });
+</script>
 
 
 @endpush

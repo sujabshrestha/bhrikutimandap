@@ -38,11 +38,12 @@
                     <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                         <div class = "tab-pane-content">
                             <div class = "row content-row">
+                               
                                 <!-- left column -->
                                 <div class="col-lg-5 content-col-l">
                                     <div class = "acc-intro">
                                         <div class = "acc-intro-img">
-                                            <img src = "{{ asset('frontendfiles/assets/images/profile-image.png')}}" alt = "" class = "img-cover" id = "profile-img-view">
+                                            <img src = "{{getOrginalUrl($user->profile_image_id) ?? asset('frontendfiles/assets/images/profile-image.png')}}" alt = "" class = "img-cover" id = "profile-img-view">
                                             <button type = "button" class = "profile-img-btn d-flex align-items-center bg-white">
                                                 <img src = "{{ asset('frontendfiles/assets/images/gallery-export.svg')}}" alt = 'icon' class="icon">
                                                 <span class = "text-sm ms-1">Change Picture</span>
@@ -51,27 +52,27 @@
                                         </div>
 
                                         <div class="acc-intro-block border-bottom">
-                                            <p class = "text">Sujab Shrestha</p>
+                                            <p class = "text">{{ $user->name ?? 'N/A'}}</p>
                                             <ul>
-                                                <li class = "text-sm my-2">Sujabshrestha12@gmail.com</li>
-                                                <li class = "text-sm my-2">+977-9842184939</li>
+                                                <li class = "text-sm my-2">{{ $user->email ?? 'N/A'}}</li>
+                                                <li class = "text-sm my-2">{{ $user->phone ?? 'N/A'}}</li>
                                             </ul>
                                         </div>
 
                                         <div class="acc-intro-block">
                                             <p class = "text-silver mb-2 text-sm">Organization: </p>
-                                            <p class = "text mb-1">Samaj Kalyan Parisad</p>
+                                            <p class = "text mb-1">{{ $user->organization->organization_name ?? 'N/A'}}</p>
                                             <ul>
-                                                <li class = "text-sm my-2">01-5364732, 9842184939</li>
-                                                <li class = "text-sm my-2">Samajkalyan@gmail.com</li>
-                                                <li class = "text-sm my-2">Samajkalyanparisad.com.np</li>
+                                                <li class = "text-sm my-2">{{ $user->organization->organization_phone_no ?? 'N/A'}}</li>
+                                                <li class = "text-sm my-2">{{ $user->organization->organization_email ?? 'N/A' }}</li>
+                                                <li class = "text-sm my-2">{{ $user->organization->organization_website ?? 'N/A' }}</li>
                                             </ul>
                                         </div>
                                     </div>
 
                                     <div class = "acc-info">
                                         <h4 class = "text mb-3">Information:</h4>
-                                        <p class = "text-sm">Lorem ipsum dolor sit amet consectetur. Vitae tristique aliquet tempus in aliquet id. Risus lacus at magna congue vulputate. Arcu egestas sed placerat odio nullam consectetur scelerisque tellus. Libero risus volutpat vel est aliquam. Purus vestibulum in urna nunc. Sagittis interdum faucibus ut mattis facilisi facilisis nec odio. Tincidunt malesuada odio integer fermentum eu nunc ac molestie. Mattis egestas nibh etiam pellentesque egestas id. Commodo blandit proin viverra sociis maecenas ullamcorper aliquam. Posuere diam auctor sit purus congue quam enim aliquet. Arcu pulvinar nec at nisl eu tellus a donec.</p>
+                                        <p class = "text-sm">{!! $user->description ?? 'N/A'!!}</p>
                                     </div>
                                 </div>
                                 <!-- end of left column -->
@@ -79,33 +80,51 @@
                                 <!-- right column -->
                                 <div class = "col-lg-7 content-col-r mt-5 mt-lg-0">
                                     <div class = "mb-5">
-                                        <form class = "profile-form">
+                                        <form class = "profile-form" action="{{ route('vendor.profileUpdate')}}" method="POST">
+                                            @csrf
                                             <div class = "form-block mb-4">
                                                 <h3 class = "text-lg form-block-title">Personal Profile:</h3>
                                                 <div class = "row form-elem-row">
                                                     <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Name</label>
-                                                        <input type = "text" class = "form-control"> 
+                                                        <label for = "name" class = "form-label">Name<span class="text-danger"> *</span></label>
+                                                        <input type = "text" name="name" id="name" value="{{ $user->name ?? old('name')}}" class = "form-control" placeholder="Name..." required> 
+                                                        @error('name')
+                                                            <span class="text-dange">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                     <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Email</label>
-                                                        <input type = "text" class = "form-control"> 
+                                                        <label for = "email" class = "form-label">Email<span class="text-danger"> *</span></label>
+                                                        <input type = "text" name="email" id="email"  value="{{ $user->email ?? old('email')}}" class = "form-control" placeholder="Email..." required> 
+                                                        @error('email')
+                                                            <span class="text-dange">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
 
                                                 <div class = "row form-elem-row">
                                                     <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Phone No.</label>
-                                                        <input type = "text" class = "form-control"> 
+                                                        <label for = "phone" class = "form-label">Phone No.<span class="text-danger"> *</span></label>
+                                                        <input type = "text" name="phone" id="phone" value="{{ $user->phone ?? old('phone') }}" class = "form-control" placeholder="Phone No..." required> 
+                                                        @error('phone')
+                                                            <span class="text-dange">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                     <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Address</label>
-                                                        <input type = "text" class = "form-control"> 
+                                                        <label for = "adddress" class = "form-label">Address<span class="text-danger"> *</span></label>
+                                                        <input type = "text" name="address" id="address" value="{{ $user->address ?? old('address') }}" class = "form-control"  placeholder="Address..." required> 
+                                                        @error('address')
+                                                        <span class="text-dange">{{ $message }}</span>
+                                                    @enderror   
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <label for = "" class = "form-label">Description</label>
-                                                    <textarea rows = "5" class = "form-control"></textarea>
+                                                    <label for = "description" class = "form-label">Description</label>
+                                                    <textarea rows = "5" name="description" id="description" class = "form-control" placeholder="Description..." >
+                                                        {{ $user->description ?? old('description') }}
+                                                    </textarea>
+                                                    @error('description')
+                                                        <span class="text-dange">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
 
@@ -113,34 +132,52 @@
                                                 <h3 class = "text-lg form-block-title">Organization Profile:</h3>
                                                 <div class = "row form-elem-row">
                                                     <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Organization Name</label>
-                                                        <input type = "text" class = "form-control"> 
+                                                        <label for = "organization_name" class = "form-label">Organization Name<span class="text-danger"> *</span></label>
+                                                        <input type = "text" name="organization_name" id="organization_name" value="{{ $user->organization->organization_name ?? old('organization_name') }}" class = "form-control" placeholder="Organization Name..." required > 
+                                                        @error('organization_name')
+                                                            <span class="text-dange">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                     <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Organization Phone No.</label>
-                                                        <input type = "text" class = "form-control"> 
-                                                    </div>
-                                                </div>
-
-                                                <div class = "row form-elem-row">
-                                                    <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Organization Email</label>
-                                                        <input type = "text" class = "form-control"> 
-                                                    </div>
-                                                    <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Organization website</label>
-                                                        <input type = "text" class = "form-control"> 
+                                                        <label for = "organization_phone_no" class = "form-label">Organization Phone No.<span class="text-danger"> *</span></label>
+                                                        <input type = "text" name="organization_phone_no" id="organization_phone_no" value="{{ $user->organization->organization_phone_no ?? old('organization_phone_no') }}" class = "form-control" placeholder="Organization Phone No..." required> 
+                                                        @error('organization_phone_no')
+                                                        <span class="text-dange">{{ $message }}</span>
+                                                    @enderror
                                                     </div>
                                                 </div>
 
                                                 <div class = "row form-elem-row">
                                                     <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Organization Address</label>
-                                                        <input type = "text" class = "form-control"> 
+                                                        <label for = "organization_email" class = "form-label">Organization Email<span class="text-danger"> *</span></label>
+                                                        <input type = "text" name="organization_email" id="organization_email" value="{{ $user->organization->organization_email ?? old('organization_email') }}" class = "form-control" placeholder="Organization Email..." required> 
+                                                        @error('organization_email')
+                                                        <span class="text-dange">{{ $message }}</span>
+                                                    @enderror
                                                     </div>
                                                     <div class = "col-xl-6">
-                                                        <label for = "" class = "form-label">Organization PAN No.</label>
-                                                        <input type = "text" class = "form-control"> 
+                                                        <label for = "organization_website" class = "form-label">Organization Website</label>
+                                                        <input type = "text" name="organization_website" id="organization_website" value="{{ $user->organization->organization_website ?? old('organization_website') }}" class = "form-control" placeholder="Organization Website..."> 
+                                                        @error('organization_website')
+                                                        <span class="text-dange">{{ $message }}</span>
+                                                    @enderror
+                                                    </div>
+                                                </div>
+
+                                                <div class = "row form-elem-row">
+                                                    <div class = "col-xl-6">
+                                                        <label for = "organization_address" class = "form-label">Organization Address <span class="text-danger"> *</span></label>
+                                                        <input type = "text" name="organization_address" id="organization_address" value="{{ $user->organization->organization_address ?? old('organization_address') }}" class = "form-control" placeholder="Organization Address..." required> 
+                                                        @error('organization_address')
+                                                        <span class="text-dange">{{ $message }}</span>
+                                                    @enderror
+                                                    </div>
+                                                    <div class = "col-xl-6">
+                                                        <label for = "organization_pan_no" class = "form-label">Organization PAN No.<span class="text-danger"> *</span></label>
+                                                        <input type = "text" name="organization_pan_no" value="{{ $user->organization->organization_pan_no ?? old('organization_pan_no') }}" id="organization_pan_no" class = "form-control" placeholder="Organization PAN No." required> 
+                                                        @error('organization_pan_no')
+                                                        <span class="text-dange">{{ $message }}</span>
+                                                    @enderror
                                                     </div>
                                                 </div>
 
@@ -488,155 +525,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="bookingDetailsModal" tabindex="-1" aria-labelledby="bookingDetailsModal" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content overflow-hidden">
-                <div class = "booking-modal-header">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="booking-modal-top px-3 d-flex flex-column justify-content-center text-center">
-                        <div class=" bookings-item-badge-pending d-inline-flex align-items-center justify-content-center align-self-center mb-0">
-                            <img src = "assets/images/hourglass.svg" alt = "" class = "icon">
-                            <span class="text-sm text-white">Payment Pending</span>
-                        </div>
-                        <div class="booking-modal-title sc-title">
-                            <h3 class = "ls-def">Large Exbition Hall & area around it</h3>
-                        </div>
-                        <div class="booking-modal-date text-sm">2080/ 10 / 13</div>
-                    </div>
-
-                    <div class = "booking-modal-body px-3">
-                        <div class = "row mx-2 mx-lg-auto">
-                            <div class = "col-xl-3 booking-modal-body-l text-center mt-3">Documents</div>
-                            <div class = "col-xl-9 booking-modal-body-r w-auto mx-auto mt-3 ms-xl-0">
-                                <div class = "booking-details-wrapper">
-                                    <!-- details block -->
-                                    <div class = "details-block row">
-                                        <div class = "col-lg-4">
-                                            <p class = "text mb-0">Application:</p>
-                                            <div class="d-flex align-items-center approved my-2">
-                                                <img src = "{{ asset('frontendfiles/assets/images/check.svg')}}" alt = "" class = "icon ms-0">
-                                                <span class = "fs-xx-sm text-primary">Approved</span>
-                                            </div>
-                                        </div>
-                                        <div class = "col-lg-8">
-                                            <div class = 'booking-list-group mt-2 mt-lg-0'>
-                                                <div class="list-group-item mb-3">
-                                                    <div class = "list-item-l text-sm">
-                                                        <img src = "{{ asset('frontendfiles/assets/images/message.svg') }}" alt = "" class = "list-item-icon">
-                                                        <span class = "text-xs">सेवा सम्बन्धि गुनासो सुन्ने जिम्मेवार अधिकारी</span>
-                                                    </div>
-                                                    <span class = "list-item-r text-xs">ववडा अध्यक्ष / वडा सचिव</span>
-                                                </div>
-
-                                                <div class="list-group-item mb-3">
-                                                    <div class = "list-item-l text-sm">
-                                                        <img src = "{{ asset('frontendfiles/assets/images/process.svg') }}" alt = "" class = "list-item-icon">
-                                                        <span class = "text-xs">सेवा सम्बन्धि गुनासो सुन्ने प्रक्रिया</span>
-                                                    </div>
-                                                    <span class = "list-item-r text-xs"></span>
-                                                </div>
-
-                                                <div class="list-group-item">
-                                                    <div class = "list-item-l text-sm">
-                                                        <img src = "{{ asset('frontendfiles/assets/images/event.svg')}}" alt = "" class = "list-item-icon">
-                                                        <span class = "text-xs">सम्बन्धित सेवा प्राप्त गर्न भर्नु पर्ने फारम</span>
-                                                    </div>
-                                                    <span class = "list-item-r text-xs"></span>
-                                                </div>
-                                            </div>
-                                            <div class = "booking-modal-btns mt-3 d-sm-flex">
-                                                <button type = "button" class = "modal-upload-btn d-flex align-items-center my-1">
-                                                    <img src = "{{ asset('frontendfiles/assets/images/document-upload.svg')}}" alt = "" class = "icon">
-                                                    <span class = "text-sm text-white ls-def">Upload New</span>
-                                                </button>
-                                                <button type = "button" class = "modal-download-btn d-flex align-items-center my-1">
-                                                    <img src = "{{ asset('frontendfiles/assets/images/document-download.svg') }}" alt = "" class = "icon">
-                                                    <span class = "text-sm text-white ls-def">Download</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end of details block -->
-                                    <div class = "horz-line my-3"></div>
-                                    <!-- details block -->
-                                    <div class = "details-block row">
-                                        <div class = "col-lg-4">
-                                            <p class = "text mb-0">Payment: :</p>
-                                            <div class="d-flex align-items-center approved my-2">
-                                                <img src = "{{ asset('frontendfiles/assets/images/hourglass-atom.svg')}}" alt = "" class = "icon ms-0">
-                                                <span class = "fs-xx-sm text-tangerine">Payment Pending</span>
-                                            </div>
-                                        </div>
-                                        <div class = "col-lg-8">
-                                            <div class = 'booking-list-group mt-2 mt-lg-0'>
-                                                <div class="list-group-item mb-3">
-                                                    <div class = "list-item-l text-sm">
-                                                        <img src = "{{ asset('frontendfiles/assets/images/message.svg') }}" alt = "" class = "list-item-icon">
-                                                        <span class = "text-xs">सेवा सम्बन्धि गुनासो सुन्ने जिम्मेवार अधिकारी</span>
-                                                    </div>
-                                                    <span class = "list-item-r text-xs">ववडा अध्यक्ष / वडा सचिव</span>
-                                                </div>
-
-                                                <div class="list-group-item mb-3">
-                                                    <div class = "list-item-l text-sm">
-                                                        <img src = "{{ asset('frontendfiles/assets/images/process.svg') }}" alt = "" class = "list-item-icon">
-                                                        <span class = "text-xs">सेवा सम्बन्धि गुनासो सुन्ने प्रक्रिया</span>
-                                                    </div>
-                                                    <span class = "list-item-r text-xs"></span>
-                                                </div>
-
-                                                <div class="list-group-item">
-                                                    <div class = "list-item-l text-sm">
-                                                        <img src = "{{ asset('frontendfiles/assets/images/event.svg')}}" alt = "" class = "list-item-icon">
-                                                        <span class = "text-xs">सम्बन्धित सेवा प्राप्त गर्न भर्नु पर्ने फारम</span>
-                                                    </div>
-                                                    <span class = "list-item-r text-xs"></span>
-                                                </div>
-                                            </div>
-                                            <div class = "booking-modal-btns mt-3 d-sm-flex">
-                                                <button type = "button" class = "modal-upload-btn d-flex align-items-center my-1">
-                                                    <img src = "{{ asset('frontendfiles/assets/images/document-upload.svg')}}" alt = "" class = "icon">
-                                                    <span class = "text-sm text-white ls-def">Upload New</span>
-                                                </button>
-                                                <button type = "button" class = "modal-download-btn d-flex align-items-center my-1">
-                                                    <img src = "{{ asset('frontendfiles/assets/images/document-download.svg') }}" alt = "" class = "icon">
-                                                    <span class = "text-sm text-white ls-def">Download</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end of details block -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class = "booking-modal-bottom mt-4">
-                        <div class = "btns-list d-flex">
-                            <button type = "button" class = "btns-list-item bottom-cancel-btn">
-                                <span class = "text-sm text-white ls-def">Cancel Booking</span>
-                                <img src = "{{ asset('frontendfiles/assets/images/cancel.svg')}}" alt = "" class = "icon">
-                            </button>
-
-                            <a href = "#" class = "btns-list-item bottom-postpone-btn">
-                                <span class = "text-sm text-white ls-def">Postpone event</span>
-                                <img src = "{{ asset('frontendfiles/assets/images/calendar-edit.svg')}}" alt = "" class = "icon">
-                            </a>
-
-                            <a href = "#" class = "btns-list-item bottom-update-btn">
-                                <span class = "text-sm text-white ls-def">Request update</span>
-                                <img src = "{{ asset('frontendfiles/assets/images/info-circle-2.svg')}}" alt = "" class = "icon">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 </main>
 
 @endsection

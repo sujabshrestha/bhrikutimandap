@@ -18,7 +18,7 @@ class Booking extends Model
         'to_date',
     ];
 
-    protected $date = ['from_date','to_date'];
+    protected $dates = ['from_date','to_date'];
 
     public function venues(){
         return $this->belongsToMany(Venue::class,'venue_bookings');

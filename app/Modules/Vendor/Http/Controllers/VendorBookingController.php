@@ -34,16 +34,15 @@ class VendorBookingController extends Controller
         // dd($request->all());
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
-        $data = Venue::whereDoesntHave('booking',function($q){
-                        $q->where('status','Declined');
-                    })->get();
-        dd($data);   
-        // $venues = 
-
+        $venues = Venue::with('bookings')->get();
+        $data = [
+            'view' => view('Vendor::frontend.vendor.appendVenueList', compact('venues'))->render()
+        ];
+        return $this->response->responseSuccess($data,"Successfully Filtered", 200);
     }
 
     public function bookingStore(Request $request){
-        // try{
+        try{
             // dd($request->all());
             $booking = new Booking();
             $booking->vendor_id = Auth::id();
@@ -58,10 +57,10 @@ class VendorBookingController extends Controller
             }
             Toastr::error("Something Weng Wrong. Please Try Again.");
             return redirect()->back();
-        // }catch (\Exception $e) {
-        //     Toastr::error($e->getMessage());
-        //     return redirect()->back();
-        // }
+        }catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
+        }
     }
 
 
