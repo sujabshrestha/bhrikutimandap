@@ -32,6 +32,27 @@ function () {
 
 
     //application
-    Route::get('application', 'ApplicationController@application')->name('application');
-    Route::post('application-store', 'ApplicationController@applicationStore')->name('application.store');
+
+    Route::group([
+        'prefix' => 'application',
+        'as' => 'application.'
+    ], function(){
+        Route::get('/', 'ApplicationController@application');
+
+        Route::post('store', 'ApplicationController@applicationStore')->name('store');
+
+        Route::get('proceed-to-payment/{id}', 'ApplicationController@proceedToPayment')->name('proceedToPayment');
+    });
+
+
+    Route::group([
+        'prefix' => 'payment',
+        'as' => 'payment.'
+    ], function(){
+
+        Route::post('store/{id}', 'PaymentController@store')->name('store');
+
+    });
+
+
 });

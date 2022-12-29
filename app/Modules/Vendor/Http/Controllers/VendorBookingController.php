@@ -2,14 +2,18 @@
 
 namespace Vendor\Http\Controllers;
 
+
 use App\GlobalServices\ResponseService;
 
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
 use Files\Repositories\FileInterface;
 use Venue\Repositories\VenueInterface;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Vendor\Models\Booking;
+use Venue\Models\Venue;
 
 class VendorBookingController extends Controller
 {
@@ -27,15 +31,41 @@ class VendorBookingController extends Controller
     }
 
     public function bookingFilter(Request $request){
+        // dd($request->all());
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+        $data = Venue::whereDoesntHave('booking',function($q){
+                        $q->where('status','Declined');
+                    })->get();
+        dd($data);
+        // $venues =
 
     }
 
     public function bookingStore(Request $request){
-        dd('hello');
+        // try{
+            // dd($request->all() , Auth::id());
+            $booking = new Booking();
+            $booking->vendor_id = Auth::id();
+            $booking->status = "Pending";
+            $booking->payment_status = "Pending";
+            $booking->from_date = Carbon::now();
+            $booking->to_date = Carbon::now()->addDays(3);
+            if($booking->save()){
+                $booking->venues()->attach($request->venue);
+                Toastr::success('Successfully Applied');
+                return view('Vendor::frontend.vendor.application', compact('booking'));
+            }
+            Toastr::error("Something Weng Wrong. Please Try Again.");
+            return redirect()->back();
+        // }catch (\Exception $e) {
+        //     Toastr::error($e->getMessage());
+        //     return redirect()->back();
+        // }
     }
 
 
-    
+
 
 
 

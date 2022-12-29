@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Files\Repositories\FileInterface;
 use Illuminate\Support\Facades\Auth;
 use Vendor\Models\Application;
+use Vendor\Models\Booking;
 
 class ApplicationController extends Controller
 {
@@ -38,17 +39,14 @@ class ApplicationController extends Controller
             if ($request->uploadfiles) {
                 foreach($request->uploadfiles as $uploadfile){
                     $application = new Application();
-
-
-                    $application->vendor_id = Auth::user()->id;
-
+                    $application->booking_id = $request->booking_id;
                     $uploaded = $this->file->storeFile($uploadfile);
                     $application->file_id = $uploaded->id;
                     $application->save();
                 }
 
                 Toastr::success("Successfully Saved");
-
+                return view('Vendor::frontend.vendor.application');
 
             }
             Toastr::error("Something went wrong");
@@ -58,4 +56,17 @@ class ApplicationController extends Controller
         //     return redirect()->back();
         // }
     }
+
+    public function proceedToPayment($id){
+        try {
+            $booking = Booking::where('id', $id)->with(['venues', 'applications'])->withSum('venues','price')->first();
+
+            return view('Vendor::frontend.vendor.payment', compact('booking'));
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+
 }

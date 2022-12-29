@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(
 [
-    'prefix' => config('vendorRoute.prefix.vendor'),
-    'namespace' => config('vendorRoute.namespace.vendor'),
-    'as' => config('vendorRoute.as.vendor'),
+    'prefix' => config('vendorRoute.prefix.admin'),
+    'namespace' => config('vendorRoute.namespace.admin'),
+    'as' => config('vendorRoute.as.admin'),
     'middleware' => ['web']
 ],
 function () {
-    Route::get('approvedlists', 'ApplicationApprovalController@approvalLists')->name('appovalLists');
+    Route::get('approvedlists', 'ApplicationApprovalController@approvalLists')->name('approvalLists');
+
+    Route::get('changeStatus/{id}', 'ApplicationApprovalController@changeStatus')->name('approvalLists.changeStatus');
 });

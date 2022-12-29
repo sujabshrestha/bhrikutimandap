@@ -26,25 +26,11 @@
   <!--  BEGIN CONTENT AREA  -->
         <div class="row layout-top-spacing">
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                <div class="statbox widget box box-shadow" style="padding: 0;">
-                    <div class="widget-content widget-content-area">
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <h4>Site Setting</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <form enctype="multipart/form-data" method="POST" action="{{ route('backend.siteSetting.store') }}">
-                                @csrf
-                                @include('SiteSetting::backend.commonForm')
+                <form enctype="multipart/form-data" method="POST" action="{{ route('backend.siteSetting.store') }}">
+                    @csrf
+                    @include('SiteSetting::backend.commonForm')
 
-                                <button type="submit" class="btn btn-primary float-right mb-3">Submit</a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -56,7 +42,7 @@
 <script src="{{ asset('adminfiles/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
 
 <script>
-    
+
     @if (getThumbnailUrl(returnSiteSetting('logo')))
     // getThumbnailUrl(returnSiteSetting('logo'))
         var importedBaseImage = "{{ getThumbnailUrl(returnSiteSetting('logo')) }}";
@@ -92,18 +78,21 @@
         var firstUpload = new FileUploadWithPreview('aboutUsImage');
     @endif
 
+
+    @if (getThumbnailUrl(returnSiteSetting('qr_image')))
+        var importedBaseImage = "{{ getThumbnailUrl(returnSiteSetting('qr_image')) }}";
+        var firstUpload = new FileUploadWithPreview('qrImage', {
+        images: {
+        baseImage: importedBaseImage,
+        },
+        });
+    @else
+        var firstUpload = new FileUploadWithPreview('qrImage');
+    @endif
+
 </script>
 
-<script>
 
-
-    var logo = new FileUploadWithPreview('siteLogo');
-
-    var favicon = new FileUploadWithPreview('siteFavIcon');
-
-    var siteEmailAds = new FileUploadWithPreview('aboutUsImage');
-
-</script>
 
 
 @endpush

@@ -1,154 +1,205 @@
 @extends('layouts.admin.master')
 
-@section('title', 'All Wards')
-@section('breadcrumb', 'All Wards')
+@section('title', 'All items')
+@section('breadcrumb', 'All items')
 
-@push('css')
-<style>
-    td{
-        cursor: all-scroll;
-    }
-</style>
-
+@push('styles')
+    <style>
+        td {
+            cursor: all-scroll;
+        }
+    </style>
 @endpush
 
 
 @section('content')
-    <div id="tableSimple" class="col-lg-12 col-12 layout-spacing">
-        <div class="statbox widget box box-shadow">
-            <div class="widget-header">
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <h4>Approval Lists</h4>
+    <div class="row layout-top-spacing">
+        <div id="tableSimple" class="col-lg-12 col-12">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h4>Approval Lists</h4>
+                                </div>
+                                {{-- <div class="col-md-2">
+                        <a href="{{ route('backend.item.add') }}" type="button"
+                            class="btn btn-primary mt-3 mb-3">Add</a>
+                        <a href="{{ route('backend.item.trashed.index') }}" type="button"
+                            class="btn btn-danger mt-3 mb-3">Trash</a>
+                    </div> --}}
                             </div>
-                            {{-- <div class="col-md-2">
-                                <a href="{{ route('backend.ward.add') }}" type="button"
-                                    class="btn btn-primary mt-3 mb-3">Add</a>
-                                <a href="{{ route('backend.ward.trashed.index') }}" type="button"
-                                    class="btn btn-danger mt-3 mb-3">Trash</a>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="widget-content widget-content-area">
-                @if (isset($approvallists) && !empty($approvallists))
-                    <div class="table-responsive">
-                        <table class="table table-bordered mb-4">
-                            <thead>
-                                <tr>
-                                    <th>S.no</th>
-                                    <th style="width: 40%;">Start Date</th>
-                                    <th class="text-center">End Date</th>
-                                    <th class="text-center">Vendor</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">Pending Status</th>
-                                    <th class="text-center">Venue</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="row_position">
-                                @foreach ($approvallists as $item)
-                                    <tr id="{{ $ward->id }}">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $ward->title }}</td>
-
-                                        <td class="text-center">
-
-                                            <button data-status="{{ $ward->status }}" data-url="{{ route('backend.ward.changeStatus', ':id') }}" data-id="{{ $ward->id }}"  id="statusChangeGlobal"
-                                                class="btn btn-sm statusChangeGlobal @if ($ward->status == 'Active')
-                                                btn-success
-                                                @else
-                                                btn-danger @endif ">
-                                            {{ $ward->status }}
-                                            </button>
-                                        </td>
-                                        <td>
-                                            {{ isset($ward->wardInfo) ? $ward->wardInfo->population : 'N/A'}}
-                                        </td>
-                                        <td>
-                                            {{ isset($ward->wardInfo) ? $ward->wardInfo->area : 'N/A'}}
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('backend.ward.edit', $ward->slug) }}"
-                                                class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <a href="{{ route('backend.ward.delete', $ward->slug) }}" class="btn btn-danger btn-sm"><i
-                                                    class="fa-solid fa-trash"></i></a>
-
-                                        </td>
+                <div class="widget-content ">
+                    @if (isset($bookinglists) && !empty($bookinglists))
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>S.no</th>
+                                        <th>Start Date</th>
+                                        <th class="text-center">End Date</th>
+                                        <th class="text-center">Vendor</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Payment Status</th>
+                                        {{-- <th class="text-center">Venue</th> --}}
+                                        <th>Action</th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody class="row_position">
+                                    @foreach ($bookinglists as $item)
+                                        <tr id="{{ $item->id }}" class="text-capitalize">
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ !is_null('from_date') ? Carbon\Carbon::parse($item->from_date)->format('Y-m-d') : '' }}
+                                            </td>
+                                            <td>{{ !is_null('end_date') ? Carbon\Carbon::parse($item->end_date)->format('Y-m-d') : '' }}
+                                            </td>
+                                            <td>{{ $item->vendor->name }}</td>
+                                            <td class="text-center">
+                                                <select name="status" data-url="{{ route('admin.approvalLists.changeStatus', $item->id) }}" class="form-control statusChange"  id="status">
+                                                    <option @if ($item->status == 'Approved') selected @endif
+                                                        value="Approved">Approved</option>
+                                                    <option @if ($item->status == 'Declined') selected @endif
+                                                        value="Declined">Declined</option>
+                                                    <option @if ($item->status == 'Pending') selected @endif
+                                                        value="">Pending</option>
+                                                </select>
+                                            </td>
+                                            <td class="text-center">
+                                                <select name="payment_status" class="form-control" id="payment_status">
+                                                    <option @if ($item->payment_status == 'Pending') selected @endif
+                                                        value="">Pending</option>
+                                                    <option @if ($item->payment_status == 'Approved') selected @endif
+                                                        value="">Approved</option>
+                                                    <option @if ($item->payment_status == 'Declined') selected @endif
+                                                        value="">Declined</option>
 
-                            </tbody>
-                        </table>
+                                                </select>
+                                            </td>
 
+
+                                            <td>
+                                                <a href="" class="btn btn-success btn-sm"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>
+                                                <a href="" class="btn btn-danger btn-sm"><i
+                                                        class="fa-solid fa-trash"></i></a>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                            {{--
                         <div class="pagination d-flex justify-content-center">
-                            {!! $wards->links('vendor.pagination.bootstrap-4') !!}
+                            {!! $bookinglists->links('vendor.pagination.bootstrap-4') !!}
+                        </div> --}}
+
+
                         </div>
+                    @else
+                        <h1 class="text-center text-danger">No any items found!!!</h1>
+                    @endif
 
-
-                    </div>
-                @else
-                    <h1 class="text-center text-danger">No any wards found!!!</h1>
-                @endif
+                </div>
 
             </div>
-
         </div>
     </div>
 @endsection
 
 
-@push('script')
+@push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(".row_position").sortable({
+            delay: 150,
+            stop: function() {
+                var selectedData = new Array();
+                $('.row_position>tr').each(function() {
+                    selectedData.push($(this).attr("id"));
+                });
+                console.log(selectedData);
+                updateOrder(selectedData);
+            }
+        });
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript">
+        function updateOrder(data) {
+            console.log(data);
+            var myUrl = "#";
 
-
-    $( ".row_position" ).sortable({
-        delay: 150,
-        stop: function() {
-            var selectedData = new Array();
-            $('.row_position>tr').each(function() {
-                selectedData.push($(this).attr("id"));
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
-            console.log(selectedData);
-            updateOrder(selectedData);
+            $.ajax({
+                type: "POST",
+                url: myUrl,
+                data: {
+                    position: data
+                },
+                beforeSend: function(result) {
+                    $('#order-btn').hide();
+                },
+                success: function(result) {
+                    $('#order-btn').show();
+                },
+                error: function(result) {
+                    $('#order-btn').show();
+                }
+            });
         }
-    });
+    </script>
 
-    function updateOrder(data) {
-        console.log(data);
-        var myUrl = "#";
+    <script>
+        $(document).on('change', '.statusChange', function(e) {
+            e.preventDefault();
+            alert("fdljsafdksahdfk");
+            var currentthis = $(this);
+            var status = currentthis.val();
+            var url = currentthis.data('url');
+            $.ajax({
+                type: "GET",
+                data: {
+                    'status': status
+                },
+                url: url,
+                beforeSend: function(data) {
+                    loader();
+                },
+                success: function(data) {
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+
+                    toastr.success(data.message);
+
+
+
+                },
+                error: function(err) {
+                    if (err.status == 422) {
+                        $.each(err.responseJSON.errors, function(i, error) {
+                            var el = $(document).find('[name="' + i + '"]');
+                            el.after($('<span style="color: red;">' + error[0] + '</span>')
+                                .fadeOut(4000));
+                        });
+                    }
+
+                    currentevent.attr('disabled', false);
+                },
+                complete: function(data) {
+
+                    $.unblockUI();
+                }
+            });
         });
-        $.ajax({
-            type: "POST",
-            url: myUrl,
-            data: {position:data},
-            beforeSend: function (result) {
-                $('#order-btn').hide();
-            },
-            success: function (result) {
-                $('#order-btn').show();
-            },
-            error: function (result) {
-                $('#order-btn').show();
-            }
-        });
-    }
 
 
 
 
-
-</script>
-
+    </script>
 @endpush

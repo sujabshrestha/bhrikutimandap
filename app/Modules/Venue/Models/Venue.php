@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Vendor\Models\Booking;
 
 class Venue extends Model
 {
@@ -27,5 +28,8 @@ class Venue extends Model
         ];
     }
 
-    // public
+   
+    public function bookings(){
+        return $this->belongsToMany(Booking::class,'venue_bookings','booking_id','venue_id');
+    }
 }

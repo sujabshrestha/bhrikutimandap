@@ -50,22 +50,40 @@
                                 </div>
 
                                 <div class = "notify-list-group">
+
+
+                                    @foreach (vendorBookingApprovals() as $booking)
+
+
+
                                     <div class = "notify-list-item border-bottom">
                                         <div class = "notify-list-item-icon">
-                                            <img src = "assets/images/check-green.svg">
+                                            <img src = "{{ asset('frontendfiles/assets/images/check-green.svg') }}">
                                         </div>
                                         <div class = "notify-list-item-text text-start">
-                                            <p class = "text-sm mb-1">Payment has been verified</p>
-                                            <p class = "text-xs mb-1 fw-4">Your payment for booking of Large exhibition hall for 31st December has been verified.</p>
-                                            <span class = "text-xxs text-silver d-block">1 hr ago</span>
-                                            <a href = "#" class = "btn-outline-primary-xs btn mt-1">
-                                                <span class = "btn-text">Check Details</span>
+                                            <p class = "text-sm mb-1">Application {{ $booking->status }}</p>
+                                            <p class = "text-xs mb-1 fw-4">Your application for booking of Large exhibition hall for {{ Carbon\Carbon::parse($booking->from_date)->format('dS M') }} to {{ Carbon\Carbon::parse($booking->end_date)->format('dS M') }}  has been {{ $booking->status }}.</p>
+                                            <span class = "text-xxs text-silver d-block">{{ $booking->created_at->diffForHumans() }}</span>
+                                            @if ($booking->status == "Approved")
+
+
+                                            <a href = "{{ route('vendor.application.proceedToPayment', $booking->id) }}" class = "btn-outline-primary-xs btn mt-1">
+                                                <span class = "btn-text">Proceed to payment</span>
                                                 <span class = "ms-2 text-primary text-xs">
                                                     <i class = "fas fa-arrow-right"></i>
                                                 </span>
                                             </a>
+                                            @else
+                                            <a href = "#" class = "btn-outline-primary-xs btn mt-1">
+                                                <span class = "btn-text">Waiting for approval</span>
+                                                <span class = "ms-2 text-primary text-xs">
+                                                    <i class = "fas fa-arrow-right"></i>
+                                                </span>
+                                            </a>
+                                            @endif
                                         </div>
                                     </div>
+                                    @endforeach
 
                                     <div class = "notify-list-item border-bottom">
                                         <div class = "notify-list-item-icon">
@@ -131,7 +149,7 @@
                                         @endphp
                                         <span class = "text-sm fw-6 my-1 d-inline-block mt-sm-0">{{ $user->name }}</span>
                                         <div class = "d-flex align-items-center  justify-content-sm-start">
-                                        <img src = "{{ asset('frontendfiles/assets/images/logged-user.svg') }}" class = "icon"> 
+                                        <img src = "{{ asset('frontendfiles/assets/images/logged-user.svg') }}" class = "icon">
                                             <span class = "text-xs text-color">{{ $user->phone ?? '' }}</span>
                                         </div>
                                     </div>
@@ -197,11 +215,11 @@
                             <span class = "text-white">Sign In</span>
                         </a>
                     @endif
-                   
+
                 </div>
                 @endauth
 
-               
+
             </div>
         </div>
     </nav>

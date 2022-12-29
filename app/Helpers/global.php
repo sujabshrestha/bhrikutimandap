@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Membership\Models\UserPointReduction;
 use PublicOpinion\Models\PublicOpinionVote;
 use User\Models\UserInfo;
+use Vendor\Models\Booking;
 
 function seperator($depth)
 {
@@ -73,6 +74,20 @@ function returnSiteSetting($key = null)
     }
     return null;
 }
+
+
+function vendorBookingApprovals(){
+    if(Auth::check()){
+        $bookings = Booking::where('vendor_id', Auth::id())
+        ->with(['venues', 'applications'])->latest()->get();
+        if(!is_null($bookings)){
+            return $bookings;
+        }
+        return false;
+    }
+    return false;
+}
+
 
 
 function ProductRating($rating)
@@ -262,20 +277,5 @@ function getMemberViewPoint()
 
 
 
- function selectfield($row){
 
-
-     return '
-     ?>
-
-<select id="select" class="form-control" name="select">
-                                      <option >Available</option>
-                                      <option>Pending</option>
-                                      <option>Completed</option>
-                                </select>
-
-
-<?php
-';
-}
 
