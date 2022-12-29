@@ -7,7 +7,7 @@ Route::group(
     'prefix' => config('venueRoute.prefix.backend'),
     'namespace' => config('venueRoute.namespace.backend'),
     'as' => config('venueRoute.as.backend'),
-    'middleware' => ['web']
+    'middleware' => ['web', 'adminMiddleware']
 ],
 function () {
 

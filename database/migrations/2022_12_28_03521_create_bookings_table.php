@@ -15,7 +15,7 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-           
+
             $table->unsignedBigInteger('vendor_id');
             $table->dateTime('from_date');
             $table->dateTime('to_date');
@@ -23,6 +23,8 @@ class CreateBookingsTable extends Migration
             $table->enum('payment_status',['Approved','Declined','Pending']);
 
             $table->foreign('vendor_id')->references('id')->on('users');
+
+        
             $table->timestamps();
         });
     }

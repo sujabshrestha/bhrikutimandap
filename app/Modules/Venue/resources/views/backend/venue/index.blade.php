@@ -20,7 +20,7 @@
                         {{-- <a href="{{ route('backend.user.trashedIndex') }}" class="btn btn-danger float-right "><i
                                     class="fa fa-trash"></i> Trash </a> --}}
                         <button class="btn btn-success float-right " id="create"
-                            data-url="{{ route('backend.venue.create') }}">Create <i class="fa fa-plus"></i></button>
+                            data-url="{{ route('backend.cms.gallery.store') }}">Create <i class="fa fa-plus"></i></button>
                     </div>
                     <div class="table-responsive mb-4 mt-4">
                         <table id="global-table" class="table table-hover" style="width:100%">

@@ -33,6 +33,7 @@
             "Files\\": "app/Modules/Files",
             "User\\": "app/Modules/User",
             "Auth\\": "app/Modules/Auth",
+            "CMS\\": "app/Modules/CMS",
             "SiteSetting\\": "app/Modules/SiteSetting",
             "Venue\\":"app/Modules/Venue",
             "Vendor\\":"app/Modules/Vendor"

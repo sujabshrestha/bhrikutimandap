@@ -53,7 +53,7 @@ class VendorBookingController extends Controller
             if($booking->save()){
                 $booking->venues()->attach($request->venue);
                 Toastr::success('Successfully Applied');
-                return redirect()->back();
+                return view('Vendor::frontend.vendor.application', compact('booking'));
             }
             Toastr::error("Something Weng Wrong. Please Try Again.");
             return redirect()->back();
@@ -62,6 +62,10 @@ class VendorBookingController extends Controller
             return redirect()->back();
         }
     }
+
+
+
+
 
 
 }

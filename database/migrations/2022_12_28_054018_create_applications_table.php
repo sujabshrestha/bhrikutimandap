@@ -17,6 +17,7 @@ class CreateApplicationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('booking_id');
             $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
+
             $table->unsignedBigInteger('file_id')->nullable();
             $table->foreign('file_id')->references('id')->on('upload_files')->onDelete('set null');
             $table->timestamps();

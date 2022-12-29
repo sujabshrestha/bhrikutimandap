@@ -30,7 +30,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 
+
 {!! Toastr::message() !!}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.js"></script>
 <script>
     function loader() {
         $.blockUI({

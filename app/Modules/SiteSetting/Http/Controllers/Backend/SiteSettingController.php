@@ -81,6 +81,21 @@ class SiteSettingController extends Controller
                     }
                     $inputValue =  $favid;
                 }
+                if ( $inputKey == 'qr_image') {
+                    $sitesetting = SiteSetting::where('key', '=', $inputKey)->first();
+
+                    if($sitesetting)
+                    {
+                        if(file_exists($sitesetting->value)){
+                            unlink($sitesetting->value);
+                        }
+                    }
+                    $uploaded = $this->file->storeFile($request->qr_image);
+                    if ($uploaded) {
+                        $favid = $uploaded->id;
+                    }
+                    $inputValue =  $favid;
+                }
 
                 $sitesubmit = SiteSetting::updateOrCreate(['key'=>$inputKey],[
                     'value' => $inputValue,

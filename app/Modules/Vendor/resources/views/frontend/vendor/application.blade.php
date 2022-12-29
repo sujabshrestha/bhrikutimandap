@@ -21,6 +21,8 @@
 
                     <form action="{{ route('vendor.application.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="booking_id" value="{{ $booking->id ?? null }}">
+
                         <div class="success-body px-4 upload-highlight">
                             <div class="upload-img mb-4" onchange="handleFiles(this.files)">
                                 <img src="assets/images/upload-image.png" alt="">
