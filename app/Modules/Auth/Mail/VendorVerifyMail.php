@@ -29,7 +29,7 @@ class VendorVerifyMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('Auth::frontend.emails.userRegisterMail')
+        return $this->markdown('Auth::backend.mail.verificationUserMail')
         ->subject('Registration Successful.')
         ->with('details', $this->details);
     }

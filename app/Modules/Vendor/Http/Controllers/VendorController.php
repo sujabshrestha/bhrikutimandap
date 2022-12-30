@@ -87,6 +87,18 @@ class VendorController extends Controller
 
 
 
+    public function markNotificationRead(){
+        try {
+            auth()->user()->unreadNotifications->markAsRead();
+            return $this->response->responseSuccessMsg("Successfully Marked as read");
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+
+
 
 
 }

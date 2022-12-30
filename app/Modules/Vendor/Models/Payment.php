@@ -9,7 +9,17 @@ class Payment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'image_id', 'booking_id'
+    ];
 
-    
+    protected $appends = [
+        'image'
+    ];
+
+    public function getImageAttribute(){
+        return url('/').getOrgianlUrl($this->image_id);
+    }
+
 
 }

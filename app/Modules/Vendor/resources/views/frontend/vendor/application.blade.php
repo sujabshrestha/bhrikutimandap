@@ -9,6 +9,7 @@
 @endpush
 
 @section('content')
+
     <!--  BEGIN CONTENT AREA  -->
     <main class="page-upload pb-5">
         <div class="container">

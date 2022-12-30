@@ -16,11 +16,3 @@
 
 
 
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-hidden="true">
-
-</div>
-
-<!-- Create Modal -->
-<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-hidden="true">
-
-</div>

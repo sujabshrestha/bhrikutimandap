@@ -34,7 +34,7 @@ class ApplicationController extends Controller
     public function applicationStore(Request $request)
     {
         // try {
-            // dd($request->all());
+            ;
 
             if ($request->uploadfiles) {
                 foreach($request->uploadfiles as $uploadfile){
@@ -46,7 +46,7 @@ class ApplicationController extends Controller
                 }
 
                 Toastr::success("Successfully Saved");
-                return view('Vendor::frontend.vendor.application');
+                return view('Vendor::frontend.vendor.applicationVerified');
 
             }
             Toastr::error("Something went wrong");

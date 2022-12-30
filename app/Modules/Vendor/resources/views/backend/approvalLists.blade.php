@@ -60,7 +60,9 @@
                                             </td>
                                             <td>{{ $item->vendor->name }}</td>
                                             <td class="text-center">
-                                                <select name="status" data-url="{{ route('admin.approvalLists.changeStatus', $item->id) }}" class="form-control statusChange"  id="status">
+                                                <select name="status"
+                                                    data-url="{{ route('admin.approvalLists.changeStatus', $item->id) }}"
+                                                    class="form-control statusChange" id="status">
                                                     <option @if ($item->status == 'Approved') selected @endif
                                                         value="Approved">Approved</option>
                                                     <option @if ($item->status == 'Declined') selected @endif
@@ -83,10 +85,13 @@
 
 
                                             <td>
-                                                <a href="" class="btn btn-success btn-sm"><i
+                                                <a href="#" class="btn btn-success btn-sm"><i
                                                         class="fa-solid fa-pen-to-square"></i></a>
-                                                <a href="" class="btn btn-danger btn-sm"><i
+                                                <a href="#" class="btn btn-danger btn-sm"><i
                                                         class="fa-solid fa-trash"></i></a>
+
+                                                <a href="#" data-url="{{ route('admin.view', $item->id) }}" class="btn viewBooking btn-secondary btn-sm"><i
+                                                        class="fa-solid fa-eye"></i></a>
 
                                             </td>
                                         </tr>
@@ -156,6 +161,23 @@
         }
     </script>
 
+
+    <script>
+        $(document).on('click', '.viewBooking', function(e) {
+            e.preventDefault();
+            var url = $(this).attr('data-url');
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(data) {
+                    console.log(data.data.view);
+                    $("#globalModal").html(data.data.view);
+                    $("#globalModal").modal('show');
+                },
+            });
+        });
+    </script>
     <script>
         $(document).on('change', '.statusChange', function(e) {
             e.preventDefault();
@@ -197,9 +219,5 @@
                 }
             });
         });
-
-
-
-
     </script>
 @endpush

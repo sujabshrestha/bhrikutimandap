@@ -12,5 +12,7 @@ Route::group(
 function () {
     Route::get('approvedlists', 'ApplicationApprovalController@approvalLists')->name('approvalLists');
 
+    Route::get('view/{id}', 'ApplicationApprovalController@view')->name('view');
+
     Route::get('changeStatus/{id}', 'ApplicationApprovalController@changeStatus')->name('approvalLists.changeStatus');
 });

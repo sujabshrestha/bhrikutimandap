@@ -14,6 +14,8 @@ function () {
 
     Route::get('/','VendorController@home')->name('home');
 
+    Route::get('/mark-notification-read','VendorController@markNotificationRead')->middleware('auth')->name('markNotificationRead');
+
     Route::get('/gallery','VendorController@gallery')->name('gallery');
 
     Route::get('/about','VendorController@about')->name('about');

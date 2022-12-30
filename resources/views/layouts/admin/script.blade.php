@@ -131,6 +131,9 @@
     });
 
 
+ 
+
+
     $(document).on('click', '.edit', function(e) {
         e.preventDefault();
         var url = $(this).attr('data-url');

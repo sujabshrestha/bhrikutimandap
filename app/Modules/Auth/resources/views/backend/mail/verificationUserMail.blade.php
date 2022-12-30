@@ -1,13 +1,13 @@
 @component('mail::message')
 
-@section('mailLogo')
+{{-- @section('mailLogo')
     <a href="{{ route('frontend.home') }}" >
-        <img src="{{ getOriginalUrl(returnSiteSetting('logo')) ?? '' }}" style="width: 120px;" alt="Egp Nepal Logo">
+        <img src="{{ getOriginalUrl(returnSiteSetting('logo')) ?? '' }}" style="width: 120px;" alt="Venue Booking System">
     </a>
-@endsection
+@endsection --}}
 
 @component('mail::panel')
-    Thank you for Signing with <a href='{{ env('site_url') }}' > {{ returnSiteSetting('title') ?? 'Egp Nepal'}} </a>
+    Thank you for Signing with <a href='{{ url('/') }}' > {{ returnSiteSetting('title') ?? 'Venue Booking System'}} </a>
 
     <br>
 @endcomponent
