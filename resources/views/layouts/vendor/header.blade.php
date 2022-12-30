@@ -4,7 +4,7 @@
             <div class = "page-navbar-content px-3 d-flex align-items-center justify-content-between">
                 <div class = "brand-and-toggler d-flex align-items-center justify-content-between">
                     <a href = "{{route('vendor.home')}}" class = "page-navbar-brand">
-                        <img src = "{{ asset('frontendfiles/assets/images/logo.svg') }} " alt = "site logo">
+                        <img src = "{{getOrginalUrl(returnSiteSetting('logo')) ?? asset('frontendfiles/assets/images/logo.svg') }} " alt = "site logo">
                     </a>
 
                     <button type = "button" class = "page-navbar-toggler d-lg-none">
@@ -134,19 +134,19 @@
 
                     <!-- profile -->
                     <div class = "profile-btn-wrapper position-relative">
+                        @php  $user = Auth::user(); @endphp
                         <button type = "button" class = "navbar-profile-avatar avatar ms-2 ms-lg-3" id = "profile-view-btn">
-                            <img src = "{{ asset('frontendfiles/assets/images/avatar.jpg') }}">
+                            <img src = "{{  getOrginalUrl($user->image_id) ?? asset('frontendfiles/assets/images/avatar.jpg') }}">
                         </button>
                         <div class = "profile-popup">
                             <div class = "profile-popup-wrapper">
                                 <div class = "popup-head border-bottom pb-3">
+                                   
                                     <div class = "popup-img mx-auto">
-                                        <img src = "{{ asset('frontendfiles/assets/images/avatar.jpg') }}">
+                                        <img src = "{{ getOrginalUrl($user->image_id) ?? asset('frontendfiles/assets/images/avatar.jpg') }}">
                                     </div>
                                     <div class = "ps-2">
-                                        @php
-                                            $user = Auth::user();
-                                        @endphp
+                                       
                                         <span class = "text-sm fw-6 my-1 d-inline-block mt-sm-0">{{ $user->name }}</span>
                                         <div class = "d-flex align-items-center  justify-content-sm-start">
                                         <img src = "{{ asset('frontendfiles/assets/images/logged-user.svg') }}" class = "icon">

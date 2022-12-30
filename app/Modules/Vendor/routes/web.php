@@ -26,6 +26,9 @@ function () {
 
     Route::post('/profile-update','VendorController@profileUpdate')->name('profileUpdate');
 
+    Route::post('/profile-image-update','VendorController@profileImageUpdate')->name('profileImageUpdate');
+
+
 
     // Booking Section
     Route::post('/venue-booking-filter','VendorBookingController@bookingFilter')->name('bookingFilter');

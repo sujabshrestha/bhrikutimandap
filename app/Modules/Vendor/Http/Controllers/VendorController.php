@@ -106,30 +106,35 @@ class VendorController extends Controller
     }
 
     public function profileUpdate(Request $request){
-        // dd($request->all());
-        $user = User::where('id',Auth::id())->first();
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        $user->email = $request->email;
-        $user->address = $request->address;
-        $user->description = $request->description;
-        if($user->update()){
-            Organization::updateOrCreate([
-                    'user_id' => $user->id
-                ],
-                [   
-                    'organization_name' => $request->organization_name, 
-                    'organization_phone_no' => $request->organization_phone_no,
-                    'organization_email' => $request->organization_email,
-                    'organization_website' => $request->organization_website,
-                    'organization_address' => $request->organization_address,
-                    'organization_pan_no' => $request->organization_pan_no,
-
-                ]);
-            Toastr::success('User Profile Successfully Updated');
-            return redirect()->route('vendor.myAccount');
+        try{
+            $user = User::where('id',Auth::id())->first();
+            $user->name = $request->name;
+            $user->phone = $request->phone;
+            $user->email = $request->email;
+            $user->address = $request->address;
+            $user->description = $request->description;
+            if($user->update()){
+                Organization::updateOrCreate([
+                        'user_id' => $user->id
+                    ],
+                    [   
+                        'organization_name' => $request->organization_name, 
+                        'organization_phone_no' => $request->organization_phone_no,
+                        'organization_email' => $request->organization_email,
+                        'organization_website' => $request->organization_website,
+                        'organization_address' => $request->organization_address,
+                        'organization_pan_no' => $request->organization_pan_no,
+    
+                    ]);
+                Toastr::success('User Profile Successfully Updated');
+                return redirect()->route('vendor.myAccount');
+            }
+    
+        }catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
         }
-
+        
 
 
 
@@ -137,7 +142,23 @@ class VendorController extends Controller
        
     }
 
-
+    public function profileImageUpdate(Request $request){
+        if($request->hasFile('profile_image')){
+            $user = User::where('id',Auth::id())->first();
+            if($user){
+                $uploaded = $this->file->storeFile($request->profile_image);
+                if($uploaded){
+                    $user->image_id = $uploaded->id;
+                    if($user->update() == true){
+                        return $this->response->responseSuccessMsg('Successfully Updated');
+                    }
+                    return $this->response->responseError('Something Went Wrong.');
+                }
+                return $this->response->responseError('Something Went Wrong.');
+            }
+            return $this->response->responseError('User Not Found.');
+        }
+    }
 
 
 

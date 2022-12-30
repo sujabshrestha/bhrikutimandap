@@ -24,14 +24,14 @@
                         <span class = "text-sm text-jet">My Account</span>
                       </button>
                     </li>
-                    <li class="nav-item" role="presentation">
+                    {{-- <li class="nav-item" role="presentation">
                       <button class="nav-link d-flex align-items-center" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings" type="button" role="tab" aria-controls="bookings" aria-selected="false">
                         <span class = "tab-icon">
                             <img src = "{{ asset('frontendfiles/assets/images/shop.svg')}}" alt = 'shop icon'>
                         </span>
                         <span class = "text-sm text-jet">My Bookings</span>
                     </button>
-                    </li>
+                    </li> --}}
                 </ul>
                 <div class="tab-content" id="bookingTabContent">
                     <!-- MY ACCOUNT -->
@@ -43,12 +43,14 @@
                                 <div class="col-lg-5 content-col-l">
                                     <div class = "acc-intro">
                                         <div class = "acc-intro-img">
-                                            <img src = "{{getOrginalUrl($user->profile_image_id) ?? asset('frontendfiles/assets/images/profile-image.png')}}" alt = "" class = "img-cover" id = "profile-img-view">
+                                            <img src = "{{getOrginalUrl($user->image_id) ?? asset('frontendfiles/assets/images/profile-image.png')}}" alt = "" class = "img-cover" id = "profile-img-view">
                                             <button type = "button" class = "profile-img-btn d-flex align-items-center bg-white">
                                                 <img src = "{{ asset('frontendfiles/assets/images/gallery-export.svg')}}" alt = 'icon' class="icon">
                                                 <span class = "text-sm ms-1">Change Picture</span>
                                             </button>
-                                            <input type = "file" class = "" accept = "image/*" id = "profile-img-input">
+                                            <form class = "profile-form image-form" action="{{ route('vendor.profileImageUpdate')}}" method="POST" enctype="multipart/form-data" >
+                                                <input type = "file" name="profile_image" class = "profile-image" accept = "image/*" id = "profile-img-input" accept="image/*">
+                                            </form>
                                         </div>
 
                                         <div class="acc-intro-block border-bottom">
@@ -529,3 +531,72 @@
 </main>
 
 @endsection
+
+@push('scripts')
+        <script>
+            $(document).on('change','.profile-image',function(e){
+                e.preventDefault();
+                alert('success');
+                $('.image-form').submit();
+            })
+
+            $(document).on('submit', '.image-form', function(e) {
+                e.preventDefault();
+                var currentevent = $(this);
+                currentevent.attr('disabled');
+                var form = new FormData($('.image-form')[0]);
+                var params = $('.image-form').serializeArray();
+                var route = $(this).attr('action');
+                console.log(route);
+                $.each(params, function(i, val) {
+                    form.append(val.name, val.value)
+                });
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    contentType: false,
+                    processData: false,
+                    data: form,
+                    beforeSend: function(data) {
+                        loader();
+                    },
+                    success: function(data) {
+
+                        toastr.success(data.message);
+                        $('.navbar-profile-avatar').
+
+                        currentevent.attr('disabled', false);
+
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        if (err.status == 422) {
+                            $.each(err.responseJSON.errors, function(i, error) {
+                                var el = $(document).find('[name="' + i + '"]');
+                                el.after($('<span style="color: red;">' + error[0] + '</span>')
+                                    .fadeOut(4000));
+                            });
+                        }
+                        if(err.status == 404){
+                            toastr.error(err.responseJSON.message);
+                        }else{
+                            toastr.error(err.responseJSON.message);
+                        }
+                        
+
+
+                        currentevent.attr('disabled', false);
+                    },
+                    complete: function() {
+                        $.unblockUI();
+                    }
+                });
+
+                });
+        </script>
+@endpush    
