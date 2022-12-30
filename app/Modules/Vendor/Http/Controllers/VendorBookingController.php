@@ -32,11 +32,24 @@ class VendorBookingController extends Controller
 
     public function bookingFilter(Request $request){
         // dd($request->all());
+
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
         $venues = Venue::with('bookings')->get();
+        $bookedVenues = Venue::whereHas('bookings',function($q) use ($fromDate,$toDate){
+                            $q->where('from_date',  '<', $fromDate)
+                            ->where('to_date', '>', $toDate);
+                        })->with('bookings')->get();
+        // dd($venues,$booked_venues);
+        // $venues = Venue::whereHas('bookings',function($q) use ($fromDate,$toDate){
+        //                 $q->where('from_date',  '<', $fromDate)
+        //                 ->where('to_date', '>', $toDate);
+        //             })->get();
+
+
+
         $data = [
-            'view' => view('Vendor::frontend.vendor.appendVenueList', compact('venues'))->render()
+            'view' => view('Vendor::frontend.vendor.appendVenueList', compact('venues','bookedVenues'))->render()
         ];
         return $this->response->responseSuccess($data,"Successfully Filtered", 200);
     }

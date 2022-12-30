@@ -72,7 +72,12 @@
 <script>
     var now = "{{ Carbon\Carbon::now()->addMonth()->format("m/d/Y") }}";
     $('.check-in-datepicker').datepicker('setStartDate',now);
-    $('.check-out-datepicker').datepicker('setStartDate',now);
+   
+    $('.check-in-datepicker').change(function(){
+        var date = $('.check-in-datepicker').val();
+        $('.check-out-datepicker').datepicker('setStartDate',date);
+    }); 
+
 
     $(document).on('submit', '#filter-form', function(e) {
 

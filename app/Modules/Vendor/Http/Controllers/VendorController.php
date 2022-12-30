@@ -31,14 +31,15 @@ class VendorController extends Controller
     }
 
     public function home(){
-        try {
+        // try {
             $venues = Venue::get();
-            // dd($venues);
+            // $booked_venues = Venue::whereHas('bookings')->with('bookings')->get();
+            // dd($venues,$booked_venues);
             return view('Vendor::frontend.vendor.home',compact('venues'));
-        } catch (\Exception $e) {
-            Toastr::error($e->getMessage());
-            return redirect()->back();
-        }
+        // } catch (\Exception $e) {
+        //     Toastr::error($e->getMessage());
+        //     return redirect()->back();
+        // }
     }
 
     public function about(){

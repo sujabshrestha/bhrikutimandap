@@ -30,6 +30,6 @@ class Venue extends Model
 
    
     public function bookings(){
-        return $this->belongsToMany(Booking::class,'venue_bookings','booking_id','venue_id');
+        return $this->belongsToMany(Booking::class,'venue_bookings','venue_id','booking_id');
     }
 }

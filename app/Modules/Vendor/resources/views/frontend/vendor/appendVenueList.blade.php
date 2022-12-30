@@ -19,7 +19,46 @@
 
                 @if (isset($venues) && count($venues)>0) 
                     @foreach ( $venues as  $venue)
-                    <tr>
+                        @if (isset($bookedVenues) && $bookedVenues)
+                            @foreach ($bookedVenues as $bookedVenue )
+                                {{-- @if($bookedVenue->id == $venue->id ) --}}
+                                <tr>
+                                <td>
+                                    <div class="form-check d-flex align-items-center p-0 m-0">
+                                        <input class="form-check-input p-0 m-0" type="checkbox" name="venue[]" value="{{ $venue->id }}" id="flexCheckDefault">
+                                    </div>
+                                </td>
+                                <td class = "text-start">
+                                    <span class = "avail-text-lg text-color">{{ $venue->title }}</span>
+                                </td>
+                                <td>
+                                    <div class = "d-flex flex-column">
+                                        {{-- @php
+                                            if(){
+
+                                            }
+                                        @endphp --}}
+                                        <span class = "text-green avail-text">Available</span>
+                                        <span class = "text-color avail-text mt-2">On 25,26 & 27th Jan</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class = "status-pills status-pills-green">
+                                        <div class = "pills-dot"></div>
+                                        <span class = "pills-text">Available</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class = "avail-text-lg text-color">Rs. {{ $venue->price }} per day</span>
+                                </td>
+                                <td>
+                                    <a href = "#" class = "btn btn-primary px-3"><span class = "btn-text">Details</span></a>
+                                </td>
+                                </tr>
+                                {{-- @endif --}}
+                            @endforeach    
+                        @endif
+                    {{-- <tr>
                         <td>
                             <div class="form-check d-flex align-items-center p-0 m-0">
                                 <input class="form-check-input p-0 m-0" type="checkbox" name="venue[]" value="{{ $venue->id }}" id="flexCheckDefault">
@@ -46,7 +85,7 @@
                         <td>
                             <a href = "#" class = "btn btn-primary px-3"><span class = "btn-text">Details</span></a>
                         </td>
-                    </tr>
+                    </tr> --}}
                     @endforeach
                 
                 @endif
