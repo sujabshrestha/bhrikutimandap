@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('image_id')->nullable();
             $table->string('address')->nullable();
             $table->string('secondary_email')->nullable();
-            $table->foreign('image_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('image_id')->references('id')->on('upload_files')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });

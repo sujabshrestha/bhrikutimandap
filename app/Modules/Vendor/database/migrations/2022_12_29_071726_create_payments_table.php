@@ -18,6 +18,9 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('booking_id');
             $table->foreign('booking_id')->references('id')->on('bookings');
             $table->unsignedBigInteger('image_id')->nullable();
+            $table->unsignedBigInteger('deposited_amount')->nullable();
+            $table->unsignedBigInteger('contact')->nullable();
+            $table->string('deposited_by')->nullable();
             $table->foreign('image_id')->references('id')->on('upload_files')->onDelete('set null');
             $table->timestamps();
         });

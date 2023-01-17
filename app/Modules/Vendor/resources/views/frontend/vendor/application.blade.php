@@ -25,8 +25,27 @@
                         <input type="hidden" name="booking_id" value="{{ $booking->id ?? null }}">
 
                         <div class="success-body px-4 upload-highlight">
+                            <div class = "upload-form">
+                                <div class = "upload-form-elem mb-xl-3">
+                                    <label for="" class = "form-label mb-2 ps-0">Name:</label>
+                                    <div class = "">
+                                        <input type = "text" name="name" class = 'form-control' value="{{ auth()->user()->name ?? "" }}" placeholder="Name">
+                                    </div>
+                                </div>
+                                <div class = "row">
+                                    <div class = "col-md-12">
+                                        <div class = "upload-form-elem">
+                                            <label for="" class = "form-label mb-2 ps-0">Contact No:</label>
+                                            <div class = "">
+                                                <input type = "text" name="contact" class = 'form-control' value="{{ auth()->user()->phone ?? "" }}" placeholder="Contact">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                             <div class="upload-img mb-4" onchange="handleFiles(this.files)">
-                                <img src="assets/images/upload-image.png" alt="">
+                                <img src="{{ asset('frontendfiles/assets/images/upload-image.png') }} " style="height:  400px !important;" alt="">
                             </div>
 
                             <p class="text-xl text-center mb-3">Drag and drop files to upload</p>
@@ -40,6 +59,7 @@
                                 <input type="file" name="uploadfiles[]" multiple="" class="visually-hidden" id="upload-input">
                             </div>
                         </div>
+
 
                         <div class="d-flex align-items-center justify-content-end">
                             <button type="submit" class="btn btn-primary submit-btn">Submit</button>

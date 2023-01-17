@@ -18,7 +18,7 @@ class CreateVenuesTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('price');
-            $table->enum('status', ['Available', 'Booked', 'Cancelled'])->default('Available');
+            $table->enum('status', ['Available', 'Booked', 'Cancelled','Reserved'])->default('Available');
             $table->text('description');
             $table->softDeletes();
             $table->unsignedBigInteger('image_id')->nullable();

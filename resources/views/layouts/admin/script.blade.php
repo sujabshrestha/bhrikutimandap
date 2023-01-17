@@ -116,7 +116,7 @@
 //global edit --}}
 
 <script>
-    $(document).on('click', '#create', function(e) {
+    $(document).on('click', '#create, .create', function(e) {
         e.preventDefault();
         var url = $(this).attr('data-url');
 
@@ -131,7 +131,7 @@
     });
 
 
- 
+
 
 
     $(document).on('click', '.edit', function(e) {

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class UserForgetPasswordMail extends Mailable
+class VendorForgetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +29,7 @@ class UserForgetPasswordMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('Auth::backend.mail.forgotPasswordMail')
+        return $this->markdown('Auth::vendor.mail.forgotPasswordMail')
             ->subject('Reset Your Password.')
             ->with('details', $this->details);
     }

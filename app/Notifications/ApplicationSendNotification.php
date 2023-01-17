@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ApplicationVerifiedNotification extends Notification
+class ApplicationSendNotification extends Notification
 {
     use Queueable;
 
@@ -16,10 +16,12 @@ class ApplicationVerifiedNotification extends Notification
      *
      * @return void
      */
-    protected $detail;
-    public function __construct($detail)
+
+    protected $details;
+
+    public function __construct($details)
     {
-        $this->detail = $detail;
+        $this->details = $details;
     }
 
     /**
@@ -55,13 +57,10 @@ class ApplicationVerifiedNotification extends Notification
      */
     public function toArray($notifiable)
     {
-
         return [
-                'from_date' => $this->detail['from_date'],
-                'end_date' => $this->detail['end_date'],
-                'status'  => $this->detail['status'],
-                'booking_id'=> $this->detail['booking_id'],
-                'type' =>$this->detail['type']
+            'message' => $this->details['message'],
+            'booking_id' => $this->details['booking_id'],
+            'type' => 'application'
         ];
     }
 }

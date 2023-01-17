@@ -53,6 +53,32 @@
                         </p>
 
                             <div class="success-body px-4 upload-highlight">
+                                <div class = "upload-form">
+                                    <div class = "upload-form-elem mb-xl-3">
+                                        <label for="" class = "form-label mb-2 ps-0">Deposited By:</label>
+                                        <div class = "">
+                                            <input type = "text" name="deposited_by" class = 'form-control' placeholder="Deposited By">
+                                        </div>
+                                    </div>
+                                    <div class = "row">
+                                        <div class = "col-md-6">
+                                            <div class = "upload-form-elem">
+                                                <label for="" class = "form-label mb-2 ps-0">Contact No:</label>
+                                                <div class = "">
+                                                    <input type = "text" name="contact" class = 'form-control' placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class = "col-md-6">
+                                            <div class = "upload-form-elem">
+                                                <label for="" class = "form-label mb-2 ps-0">Deposited Amount:</label>
+                                                <div>
+                                                    <input type = "text" name="deposited_amount" class = 'form-control' placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="upload-img mb-4" onchange="handleFiles(this.files)">
                                     <img src="{{ asset('frontendfiles/assets/images/upload-image.png') }} " style="height:  400px !important;" alt="">
                                 </div>

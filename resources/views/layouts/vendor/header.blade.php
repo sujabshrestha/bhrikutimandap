@@ -47,47 +47,137 @@
                                         class="notify-head d-flex align-items-center justify-content-between border-bottom">
                                         <h5 class="text">
                                             Notifications</h5>
-                                        <a href="#" id="MarkRead" data-url= "{{ route('vendor.markNotificationRead') }}" class="text-xs text-primary">Mark all as read</a>
+                                        <a href="#" id="MarkRead"
+                                            data-url="{{ route('vendor.markNotificationRead') }}"
+                                            class="text-xs text-primary">Mark all as read</a>
                                     </div>
 
                                     <div class="notify-list-group">
 
 
                                         @if (!is_null(auth()->user()->unreadNotifications))
-                                        @foreach (auth()->user()->unreadNotifications as $notification)
-                                        <div class="notify-list-item border-bottom">
-                                            <div class="notify-list-item-icon">
-                                                <img src="{{ asset('frontendfiles/assets/images/check-green.svg') }}">
-                                            </div>
-                                            <div class="notify-list-item-text text-start">
-                                                <p class="text-sm mb-1">Application {{ $notification->data['status'] }}</p>
-                                                <p class="text-xs mb-1 fw-4">Your application for booking of Large
-                                                    exhibition hall for
+                                            @foreach (auth()->user()->unreadNotifications as $notification)
+                                                <div class="notify-list-item border-bottom">
+                                                    @if (isset($notification->data['status']))
+                                                        @if ($notification->data['status'] == 'Approved')
+                                                            <div class="notify-list-item-icon">
+                                                                <img
+                                                                    src="{{ asset('frontendfiles/assets/images/check-green.svg') }}">
+                                                            </div>
+                                                        @elseif($notification->data['status'] == 'Declined')
+                                                            <div class="notify-list-item-icon"
+                                                                style="background-color: #dc3545;">
+                                                                <img
+                                                                    src="{{ asset('frontendfiles/assets/images/cancel.svg') }}">
+                                                            </div>
+                                                        @else
+                                                            <div class="notify-list-item-icon"
+                                                                style="background-color: #8035dc;">
+                                                                <img
+                                                                    src="{{ asset('frontendfiles/assets/images/check.svg') }}">
+                                                            </div>
+                                                        @endif
+                                                        <div class="notify-list-item-text text-start">
+                                                            <p class="text-sm mb-1">
+                                                                @
+                                                                @if ($notification->data['type'] == 'application')
+                                                                    Application
+                                                                @else
+                                                                    Payment
+                                                                @endif
+                                                                {{ $notification->data['status'] }}
+                                                            </p>
+                                                            <p class="text-xs mb-1 fw-4">Your @if ($notification->data['type'] == 'application')
+                                                                    application
+                                                                @else
+                                                                    payment
+                                                                @endif for booking of Large
+                                                                exhibition hall for
 
-                                                    {{ Carbon\Carbon::parse($notification->data['from_date'] )->format('dS M') }} to
-                                                    {{ Carbon\Carbon::parse($notification->data['end_date'])->format('dS M') }} has
-                                                    been {{ $notification->data['status'] }}.</p>
-                                                <span
-                                                    class="text-xxs text-silver d-block">{{ $notification->created_at->diffForHumans() }}</span>
-                                                @if ($notification->data['status'] == 'Approved')
-                                                    <a href="{{ route('vendor.application.proceedToPayment', $notification->data['booking_id']) }}"
-                                                        class="btn-outline-primary-xs btn mt-1">
-                                                        <span class="btn-text">Proceed to payment</span>
-                                                        <span class="ms-2 text-primary text-xs">
-                                                            <i class="fas fa-arrow-right"></i>
-                                                        </span>
-                                                    </a>
-                                                @else
-                                                    <a href="#" class="btn-outline-primary-xs btn mt-1">
-                                                        <span class="btn-text">Waiting for approval</span>
-                                                        <span class="ms-2 text-primary text-xs">
-                                                            <i class="fas fa-arrow-right"></i>
-                                                        </span>
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        @endforeach
+                                                                {{ Carbon\Carbon::parse($notification->data['from_date'])->format('dS M') }}
+                                                                to
+                                                                {{ Carbon\Carbon::parse($notification->data['end_date'])->format('dS M') }}
+                                                                has
+                                                                been {{ $notification->data['status'] }}.</p>
+                                                            <span
+                                                                class="text-xxs text-silver d-block">{{ $notification->created_at->diffForHumans() }}</span>
+
+
+                                                            @if ($notification->data['type'] == 'application')
+                                                                @if ($notification->data['status'] == 'Approved')
+                                                                    <a href="{{ route('vendor.application.proceedToPayment', $notification->data['booking_id']) }}"
+                                                                        class="btn-outline-primary-xs btn mt-1">
+                                                                        <span class="btn-text">Proceed to payment</span>
+                                                                        <span class="ms-2 text-primary text-xs">
+                                                                            <i class="fas fa-arrow-right"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                @elseif($notification->data['status'] == 'Pending')
+                                                                    <a href="#"
+                                                                        class="btn-outline-primary-xs btn mt-1">
+                                                                        <span class="btn-text">Waiting for approval</span>
+                                                                        <span class="ms-2 text-primary text-xs">
+                                                                            <i class="fas fa-arrow-right"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                    @else
+                                                        <div class="notify-list-item-icon"
+                                                            style="background-color: #dc3545;">
+                                                            <img
+                                                                src="{{ asset('frontendfiles/assets/images/cancel.svg') }}">
+                                                        </div>
+
+                                                        <div class="notify-list-item-text text-start">
+                                                            {{-- <p class="text-sm mb-1">
+                                                                @
+                                                                @if ($notification->data['type'] == 'application')
+                                                                    Application
+                                                                @else
+                                                                    Payment
+                                                                @endif
+                                                                {{ $notification->data['status'] }}
+                                                            </p> --}}
+                                                            <p class="text-xs mb-1 fw-4">{{ $notification->data['message'] }}</p>
+                                                            <span
+                                                                class="text-xxs text-silver d-block">{{ $notification->created_at->diffForHumans() }}</span>
+
+
+                                                            {{-- @if ($notification->data['type'] == 'application')
+                                                                @if ($notification->data['status'] == 'Approved')
+                                                                    <a href="{{ route('vendor.application.proceedToPayment', $notification->data['booking_id']) }}"
+                                                                        class="btn-outline-primary-xs btn mt-1">
+                                                                        <span class="btn-text">Proceed to payment</span>
+                                                                        <span class="ms-2 text-primary text-xs">
+                                                                            <i class="fas fa-arrow-right"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                @elseif($notification->data['status'] == 'Pending') --}}
+                                                                @if ($notification->data['type'] == 'application')
+                                                                    <a href="{{ route('vendor.application.index', $notification->data['booking_id'] ?? null) }}"
+                                                                        class="btn-outline-primary-xs btn mt-1">
+                                                                        <span class="btn-text">Send Application</span>
+                                                                        <span class="ms-2 text-primary text-xs">
+                                                                            <i class="fas fa-arrow-right"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                @else
+                                                                <a href=""
+                                                                    class="btn-outline-primary-xs btn mt-1">
+                                                                    <span class="btn-text">Proceed to payment</span>
+                                                                    <span class="ms-2 text-primary text-xs">
+                                                                        <i class="fas fa-arrow-right"></i>
+                                                                    </span>
+                                                                </a>
+                                                                @endif
+                                                                {{-- @endif
+                                                            @endif --}}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endforeach
                                         @endif
 
 
@@ -188,8 +278,8 @@
                 @else
                     <div class="page-navbar-btns d-flex">
                         <!-- <button type = "button" class = "navbar-btn btn-white btn-sm">
-                            <span class = "btn-text">SignUp</span>
-                        </button> -->
+                                                <span class = "btn-text">SignUp</span>
+                                            </button> -->
                         @if (Route::is('vendor.login'))
                             <a href="{{ route('vendor.register') }}"
                                 class="navbar-btn btn-primary btn-sm ms-2 d-flex align-items-center justify-content-center">

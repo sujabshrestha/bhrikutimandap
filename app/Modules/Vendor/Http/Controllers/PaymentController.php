@@ -55,6 +55,9 @@ class PaymentController extends Controller
                 foreach($request->uploadfiles as $uploadfile){
                     $payment = new Payment();
                     $payment->booking_id = $id;
+                    $payment->deposited_amount = $request->deposited_amount;
+                    $payment->contact = $request->contact;
+                    $payment->deposited_by = $request->deposited_by;
                     $uploaded = $this->file->storeFile($uploadfile);
                     $payment->image_id = $uploaded->id;
                     if($payment->save()){

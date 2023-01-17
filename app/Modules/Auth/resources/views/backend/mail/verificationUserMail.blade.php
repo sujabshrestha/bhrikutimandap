@@ -8,8 +8,6 @@
 
 @component('mail::panel')
     Thank you for Signing with <a href='{{ url('/') }}' > {{ returnSiteSetting('title') ?? 'Venue Booking System'}} </a>
-
-    <br>
 @endcomponent
 
 @component('mail::table')
@@ -20,7 +18,7 @@
 | <strong>Phone No:</strong>       | {{ $details['phone_no'] }} |
 @endcomponent
 
-@component('mail::button', ['url' => env('site_url').'/auth/verify/'.$details['id'].'/','color' => 'success'])
+@component('mail::button', ['url' => env('App_URL').'/vendor/verify/'.$details['id'].'/','color' => 'success'])
 Verify Email
 @endcomponent
 

@@ -44,15 +44,15 @@ class AuthVendorRepository implements AuthVendorInterface
       $user = new User();
 
       $user->name = $request->name;
-      if(is_numeric($request->email)){
-        $user->phone = $request->email;
-      }else{
+    //   if(is_numeric($request->email)){
+    //     $user->phone = $request->email;
+    //   }else{
           $user->email = $request->email;
-      }
+    //   }
       $user->password = bcrypt($request->password);
       if($user->save()){
         $user->assignRole('vendor');
-        return true;
+        return $user;
       }
       throw new Exception("Something went wrong");
 

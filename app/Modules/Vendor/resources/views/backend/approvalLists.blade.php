@@ -13,6 +13,7 @@
 
 
 @section('content')
+
     <div class="row layout-top-spacing">
         <div id="tableSimple" class="col-lg-12 col-12">
             <div class="statbox widget box box-shadow">
@@ -44,15 +45,16 @@
                                         <th>Start Date</th>
                                         <th class="text-center">End Date</th>
                                         <th class="text-center">Vendor</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center">Payment Status</th>
+                                        <th  class="text-center">Status</th>
+                                        <th  class="text-center">Payment Status</th>
+                                        <th style="max-width: 5% !important;">Applications</th>
                                         {{-- <th class="text-center">Venue</th> --}}
-                                        <th>Action</th>
+                                        <th style="width: 15% !important;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="row_position">
                                     @foreach ($bookinglists as $item)
-                                        <tr id="{{ $item->id }}" class="text-capitalize">
+                                        <tr id="{{ $item->id }}" class="text-capitalize text-center">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ !is_null('from_date') ? Carbon\Carbon::parse($item->from_date)->format('Y-m-d') : '' }}
                                             </td>
@@ -68,30 +70,56 @@
                                                     <option @if ($item->status == 'Declined') selected @endif
                                                         value="Declined">Declined</option>
                                                     <option @if ($item->status == 'Pending') selected @endif
-                                                        value="">Pending</option>
+                                                        value="Pending">Pending</option>
+                                                    @if ($item->payment_status == 'Approved')
+                                                        <option @if ($item->status == 'Reserved') selected @endif
+                                                            value="Reserved">Reserved</option>
+                                                    @endif
                                                 </select>
                                             </td>
                                             <td class="text-center">
-                                                <select name="payment_status" class="form-control" id="payment_status">
+                                                <select name="payment_status"
+                                                    data-url="{{ route('admin.approvalLists.paymentChangeStatus', $item->id) }}"
+                                                    class="form-control paymentChange" id="payment_status">
                                                     <option @if ($item->payment_status == 'Pending') selected @endif
-                                                        value="">Pending</option>
+                                                        value="Pending">Pending</option>
                                                     <option @if ($item->payment_status == 'Approved') selected @endif
-                                                        value="">Approved</option>
+                                                        value="Approved">Approved</option>
                                                     <option @if ($item->payment_status == 'Declined') selected @endif
-                                                        value="">Declined</option>
+                                                        value="Declined">Declined</option>
 
                                                 </select>
+                                            </td>
+
+                                            <td>
+                                                @if ($item->applications->isNotEmpty())
+                                                @foreach ($item->applications as $application)
+                                                <a href="{{ url('/').getOrginalUrl($application->file_id) }}" type="button" target="_blank" class="btn @if ($loop->iteration % 2 == 0)
+                                                    btn-primary
+                                                    @elseif($loop->iteration % 3 == 0)
+                                                    btn-info
+                                                    @else
+                                                    btn-secondary
+                                                @endif btn-sm mt-2"> {{ Str::limit(getFileTitle($application->file_id), 15, '...')  }}</a> <br>
+                                                @endforeach
+                                                @endif
                                             </td>
 
 
                                             <td>
-                                                <a href="#" class="btn btn-success btn-sm"><i
-                                                        class="fa-solid fa-pen-to-square"></i></a>
+                                                {{-- <a href="#" class="btn btn-success btn-sm"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a> --}}
                                                 <a href="#" class="btn btn-danger btn-sm"><i
                                                         class="fa-solid fa-trash"></i></a>
 
-                                                <a href="#" data-url="{{ route('admin.view', $item->id) }}" class="btn viewBooking btn-secondary btn-sm"><i
+                                                <a href="#" data-url="{{ route('admin.view', $item->id) }}"
+                                                    class="btn viewBooking btn-secondary btn-sm"><i
                                                         class="fa-solid fa-eye"></i></a>
+
+
+                                                        <a href="#" data-url="{{ route('admin.applicationModal', [$item->vendor->id, $item->id]) }}"
+                                                            class="btn create btn-secondary mt-2 btn-sm"><i
+                                                                class="fa-solid fa-eye"></i></a>
 
                                             </td>
                                         </tr>
@@ -178,10 +206,95 @@
             });
         });
     </script>
+
+
     <script>
+
+$(document).on('change', '.statusVenueChange', function(e) {
+            e.preventDefault();
+            var currentthis = $(this);
+            var status = currentthis.val();
+            var url = currentthis.data('url');
+            $.ajax({
+                type: "GET",
+                data: {
+                    'status': status
+                },
+                url: url,
+                beforeSend: function(data) {
+                    loader();
+                },
+                success: function(data) {
+
+
+                    toastr.success(data.message);
+
+
+
+                },
+                error: function(err) {
+                    if (err.status == 422) {
+                        $.each(err.responseJSON.errors, function(i, error) {
+                            var el = $(document).find('[name="' + i + '"]');
+                            el.after($('<span style="color: red;">' + error[0] + '</span>')
+                                .fadeOut(4000));
+                        });
+                    }
+
+                    currentevent.attr('disabled', false);
+                },
+                complete: function(data) {
+
+                    $.unblockUI();
+                }
+            });
+        });
+
+
         $(document).on('change', '.statusChange', function(e) {
             e.preventDefault();
-            alert("fdljsafdksahdfk");
+            var currentthis = $(this);
+            var status = currentthis.val();
+            var url = currentthis.data('url');
+            $.ajax({
+                type: "GET",
+                data: {
+                    'status': status
+                },
+                url: url,
+                beforeSend: function(data) {
+                    loader();
+                },
+                success: function(data) {
+
+
+                    toastr.success(data.message);
+
+
+
+                },
+                error: function(err) {
+                    if (err.status == 422) {
+                        $.each(err.responseJSON.errors, function(i, error) {
+                            var el = $(document).find('[name="' + i + '"]');
+                            el.after($('<span style="color: red;">' + error[0] + '</span>')
+                                .fadeOut(4000));
+                        });
+                    }
+
+                    currentevent.attr('disabled', false);
+                },
+                complete: function(data) {
+
+                    $.unblockUI();
+                }
+            });
+        });
+
+
+        $(document).on('change', '.paymentChange', function(e) {
+            e.preventDefault();
+
             var currentthis = $(this);
             var status = currentthis.val();
             var url = currentthis.data('url');

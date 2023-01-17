@@ -15,14 +15,14 @@
                         @csrf
                         <div class = "form-element">
                             <label for = "" class = "form-label">Full Name</label>
-                            <input type = "text" name="name" required class = "form-control" placeholder="Enter your full name" name = "">
+                            <input type = "text" name="name" value="{{ old('name') ?? '' }}" required class = "form-control" placeholder="Enter your full name" name = "">
                             @if ($errors->has('name'))
                             <small class="text-danger">{{ $errors->first('name') }}</small>
                             @endif
                         </div>
                         <div class = "form-element password-element">
-                            <label for = "" class = "form-label">Email or Phone Number</label>
-                            <input type = "text" name="email" class = "form-control" placeholder="loginbhrikuti@example.com" name = "">
+                            <label for = "" class = "form-label">Email</label>
+                            <input type = "email" name="email" value="{{ old('email') ?? "" }}" class = "form-control" placeholder="loginbhrikuti@example.com" name = "">
                             @if ($errors->has('email'))
                             <small class="text-danger">{{ $errors->first('email') }}</small>
                             @endif

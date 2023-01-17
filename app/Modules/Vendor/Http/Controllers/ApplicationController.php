@@ -20,10 +20,11 @@ class ApplicationController extends Controller
         $this->file = $file;
     }
 
-    public function application()
+    public function application($id)
     {
         try {
-            return view('Vendor::frontend.vendor.application');
+            $booking = Booking::where('id', $id)->first();
+            return view('Vendor::frontend.vendor.application', compact('booking'));
         } catch (\Exception $e) {
             Toastr::error($e->getMessage());
             return redirect()->back();
@@ -34,13 +35,18 @@ class ApplicationController extends Controller
     public function applicationStore(Request $request)
     {
         // try {
-            ;
+
+            $request->validate([
+                'contact' => 'numeric'
+            ]);
 
             if ($request->uploadfiles) {
                 foreach($request->uploadfiles as $uploadfile){
                     $application = new Application();
                     $application->booking_id = $request->booking_id;
                     $uploaded = $this->file->storeFile($uploadfile);
+                    $application->name = $request->name;
+                    $application->contact = $request->contact;
                     $application->file_id = $uploaded->id;
                     $application->save();
                 }

@@ -10,7 +10,7 @@ Route::group([
 
 ], function () {
 
-    Route::get('/login', 'AuthVendorController@login')->name('login');
+    Route::get('/', 'AuthVendorController@login')->name('login');
 
     Route::post('login-submit', 'AuthVendorController@loginSubmit')->name('loginSubmit');
 

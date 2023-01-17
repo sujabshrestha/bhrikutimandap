@@ -3,7 +3,7 @@ return [
     'prefix' => [
         'backend' => 'admin',
         'api' => 'api',
-        'vendor' => 'vendor'
+        'vendor' => ''
     ],
     'namespace' => [
         'backend' => 'Auth\Http\Controllers\Backend',

@@ -1,6 +1,6 @@
 @extends('layouts.vendor.master')
 
-@section('title', 'Login')
+@section('title', 'Login Venue Booking System')
 
 @section('content')
     <main class="page-login">
@@ -38,8 +38,8 @@
                             </div>
                             <div class="form-elemen d-flex align-items-center justify-content-between">
                                 <div>
-                                    <input class="form-check-input" type="checkbox" value="" id="remember_me">
-                                    <label class="form-check-label ps-2 text" for="remember_me">Remember Me</label>
+                                    <input class="form-check-input" required type="checkbox" value="" id="remember_me">
+                                    <label class="form-check-label ps-2 text" for="remember_me"><a href="{{ route('vendor.termsAndCondition') }}" target="_blank">Agree to terms and condition</a></label>
                                 </div>
                                 <a href="{{ route('vendor.forgetPassword') }}" class="text-primary text">Forgot your password?</a>
                             </div>

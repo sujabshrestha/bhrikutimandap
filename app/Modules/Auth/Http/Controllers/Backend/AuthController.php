@@ -10,9 +10,11 @@ use User\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Auth\Http\Requests\LoginRequest;
+use Auth\Jobs\VerifyVendorJob;
 use Auth\Mail\UserForgetPasswordMail;
 use Auth\Models\PasswordReset;
 use Auth\Repositories\backend\AuthInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Str;
@@ -95,40 +97,40 @@ class AuthController extends Controller
         }
     }
 
-    public function register()
-    {
-        try {
-            return view('Auth::backend.register');
-        } catch (\Exception $e) {
-            Toastr::error($e->getMessage());
-            return redirect()->back();
-        }
-    }
+    // public function register()
+    // {
+    //     try {
+    //         return view('Auth::backend.register');
+    //     } catch (\Exception $e) {
+    //         Toastr::error($e->getMessage());
+    //         return redirect()->back();
+    //     }
+    // }
 
-    public function registerSubmit(Request $request)
-    {
-        try {
-            $user = $this->auth->registerSubmit($request);
-            if ($user) {
-                // $data=[
-                //     'email'=>$user->email,
-                //     'name'=>$user->name,
-                //     'phone_no'=>$user->phone_no,
-                //     'id'=>$user->id,
-                // ];
-                // $sendVerificationUserMailJob=(new SendVerificationUserEmail($data))
-                //                                 ->delay(Carbon::now()->addSeconds(3));
-                // dispatch($sendVerificationUserMailJob);
-                Toastr::success('Registration Success !');
-                return redirect()->route('backend.login');
-            }
-            Toastr::error('Something went wrong');
-            return redirect()->route('backend.register');
-        } catch (\Exception $e) {
-            Toastr::error($e->getMessage());
-            return redirect()->back();
-        }
-    }
+    // public function registerSubmit(Request $request)
+    // {
+    //     try {
+    //         $user = $this->auth->registerSubmit($request);
+    //         if ($user) {
+    //             $data=[
+    //                 'email'=>$user->email,
+    //                 'name'=>$user->name,
+    //                 'phone_no'=>$user->phone_no,
+    //                 'id'=>$user->id,
+    //             ];
+    //             $sendVerificationUserMailJob=(new VerifyVendorJob($data))
+    //                                             ->delay(Carbon::now()->addSeconds(3));
+    //             dispatch($sendVerificationUserMailJob);
+    //             Toastr::success('Registration Success !');
+    //             return redirect()->route('backend.login');
+    //         }
+    //         Toastr::error('Something went wrong');
+    //         return redirect()->route('backend.register');
+    //     } catch (\Exception $e) {
+    //         Toastr::error($e->getMessage());
+    //         return redirect()->back();
+    //     }
+    // }
 
 
 

@@ -49,17 +49,58 @@ $(document).ready(function(){
         $("#upload-input").trigger('click');
     });
 
-    $("#upload-input").change(event => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
 
-        reader.onloadend = () => {
-            $('.upload-file-name').text(file.name);
-            $('.upload-img img').attr('aria-label', file.name);
-            $('.upload-img img').attr('src', reader.result);
+    $("#upload-input").change(event => {
+        if(event.target.files){
+            let filesAmount = event.target.files.length;
+            $('.upload-img').html("");
+            for(let i = 0; i < filesAmount; i++){
+                let reader = new FileReader();
+                reader.onload = function(event){
+                    $($.parseHTML('<img class = "uploaded-img">')).attr('src', event.target.result).appendTo($(".upload-img"));
+
+                }
+                reader.readAsDataURL(event.target.files[i]);
+            }
+            $('.upload-file-name').text(filesAmount + " file(s) selected");
         }
     });
+
+    // $("#upload-input").change(event => {
+    //     if(event.target.files){
+    //         let filesAmount = event.target.files.length;
+
+    //         for(let i = 0; i < filesAmount; i++){
+    //             let reader = new FileReader();
+    //             reader.onload = function(event){
+    //                 $($.parseHTML('<img class = "uploaded-img">')).attr('src', event.target.result).appendTo($(".upload-img"));
+    //                 console.log(event.target.result, event.target.result);
+    //             }
+    //             reader.readAsDataURL(event.target.files[i]);
+
+    //         }
+    //     }
+    //     // const reader = new FileReader();
+    //     // reader.readAsDataURL(file);
+
+    //     // reader.onloadend = () => {
+    //     //     $('.upload-file-name').text(file.name);
+    //     //     $('.upload-img img').attr('aria-label', file.name);
+    //     //     $('.upload-img img').attr('src', reader.result);
+    //     // }
+    // });
+
+    // $("#upload-input").change(event => {
+    //     const file = event.target.files[0];
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+
+    //     reader.onloadend = () => {
+    //         $('.upload-file-name').text(file.name);
+    //         $('.upload-img img').attr('aria-label', file.name);
+    //         $('.upload-img img').attr('src', reader.result);
+    //     }
+    // });
 
     // profile image upload
     $(".profile-img-btn").click(function(){
@@ -76,7 +117,7 @@ $(document).ready(function(){
         }
     });
 
-    // change active tab 
+    // change active tab
     let navTabs = $('.sc-bookings .nav-tabs .nav-item');
     jQuery.each(navTabs, function(idx, navTab){
         $(navTab).click(function(){
@@ -92,7 +133,7 @@ $(document).ready(function(){
     }
 
     // event radio option selection
-    
+
     $('.pick-venue-btn').click(function(){
         const eventRadioOptions = $('.venue-radio-options .form-check-input');
         jQuery.each(eventRadioOptions, function(idx, radioOption){

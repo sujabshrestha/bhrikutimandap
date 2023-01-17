@@ -6,7 +6,7 @@
 @endsection --}}
 
 @component('mail::panel')
-    Change Your Password Of <a href='{{ url('/') }}' > {{ returnSiteSetting('title') ?? 'NDC'}} </a>
+    Change Your Password Of <a href='{{ env('APP_URL') }}' > {{ returnSiteSetting('title') ?? 'Venue Booking System'}} </a>
     <br>
 @endcomponent
 
@@ -18,13 +18,13 @@
 
 @endcomponent
 
-@component('mail::button', ['url' => url('/').'/admin/user/resetpassword/'.$details['email'].'/'.$details['token'],'color' => 'success'])
+@component('mail::button', ['url' => env('APP_URL').'/vendor/resetpassword/'.$details['email'].'/'.$details['token'],'color' => 'success'])
 Change Password
 @endcomponent
 
 
 Thanks,<br>
-{{ returnSiteSetting('title') ?? 'EGP Nepal' }}
+{{ returnSiteSetting('title') ?? 'Venue Booking System' }}
 
 
 @endcomponent

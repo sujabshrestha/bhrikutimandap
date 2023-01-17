@@ -14,5 +14,16 @@ function () {
 
     Route::get('view/{id}', 'ApplicationApprovalController@view')->name('view');
 
+
+    //application
+    Route::get('application-modal/{id}/{bookingid}', 'ApplicationApprovalController@sendApplicationNotification')->name('applicationModal');
+
+    Route::post('application-submit/{id}', 'ApplicationApprovalController@submitApplicationNotification')->name('submitApplication');
+
+
     Route::get('changeStatus/{id}', 'ApplicationApprovalController@changeStatus')->name('approvalLists.changeStatus');
+
+    Route::get('change-venue-status/{id}', 'ApplicationApprovalController@changeVenueStatus')->name('approvalLists.change.venueStatus');
+
+    Route::get('paymentChangeStatus/{id}', 'ApplicationApprovalController@paymentChangeStatus')->name('approvalLists.paymentChangeStatus');
 });

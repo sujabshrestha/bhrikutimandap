@@ -3,6 +3,7 @@
 namespace Auth\Jobs;
 
 use Auth\Mail\UserForgetPasswordMail;
+use Auth\Mail\VendorForgetPasswordMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -10,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class UserForgetPasswordJob implements ShouldQueue
+class VendorForgetPasswordJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,7 +33,7 @@ class UserForgetPasswordJob implements ShouldQueue
      */
     public function handle()
     {
-        $mail = new UserForgetPasswordMail($this->details);
+        $mail = new VendorForgetPasswordMail($this->details);
         Mail::to($this->details['email'])->send($mail);
     }
 }
